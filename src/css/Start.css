@@ -1,0 +1,13 @@
+.draggable {
+  cursor: grab;
+  user-select: none;
+  touch-action: none; 
+}
+
+.drag-emoji {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  pointer-events: none; /* 이게 중요! 이모지가 마우스 이벤트를 가로채면 밑에 있는 버튼을 못 찾음 */
+  z-index: 1000;
+}
