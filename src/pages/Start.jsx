@@ -67,7 +67,7 @@ function Start() {
       <div className="choice-section">
         {!dragging && (
           <p
-            className="draggable"
+            className="drag-start"
             onMouseDown={handleStart}
             onTouchStart={handleStart}
           >
@@ -77,8 +77,8 @@ function Start() {
 
         {dragging && (
           <>
-            <button data-dropzone data-path="/main">옵션 A</button>
-            <button data-dropzone data-path="/main">옵션 B</button>
+            <p className="dropzone" data-dropzone data-path="/main">🐶</p>
+            <p className="dropzone" data-dropzone data-path="/result">🐰</p>
           </>
         )}
       </div>

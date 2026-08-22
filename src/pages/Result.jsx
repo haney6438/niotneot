@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import BottomSheet from "../components/BottomSheet.jsx";
-// import "../css/Result.css";
+import "../css/Result.css";
 
 function Result() {
   const navigate = useNavigate();
