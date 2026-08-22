@@ -16,20 +16,21 @@ export const SET = [
     requiredItems: ["hat_01", "shoes_01"],
     type: "bottomsheet",
     content: {
-      title: "이 조합, 왠지 낯익은데?",
       links: [
-        { label: "관련 기사", url: "https://example.com/article" },
-        { label: "SNS 게시물", url: "https://instagram.com/..." },
+        {
+          label: "관련 기사",
+          url: "https://coding-factory.tistory.com/909",
+          image: "/img/preview_1.png",
+          description: "실제 링크의 내용 어쩌구 저쩌구.. 두줄까지 출력..",
+        },
+        {
+          label: "SNS 게시물",
+          url: "https://www.instagram.com/p/DcTA9iGFHRk/",
+          image: "/img/preview_2.png",
+          description: "인스타 게시물 설명 텍스트...",
+        },
       ],
     },
   },
-  {
-    id: "set_2",
-    requiredItems: ["top_01", "shoes_02", "hat_03"],
-    type: "bottomsheet",
-    content: {
-      title: "다른 특별 조합",
-      links: [{ label: "기사 링크", url: "https://..." }],
-    },
-  },
+  // ...
 ];
