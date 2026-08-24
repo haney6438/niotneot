@@ -7,15 +7,15 @@ import "../css/Result.css";
 function Result() {
   const navigate = useNavigate();
 
-  // 테스트용: id: set_1 
-  const testSet = SET.find((set) => set.id === "set_1");
+  // 테스트용
+  const testSet = SET.find((set) => set.id === "set_5");
 
   return (
     <div className="container">
       <div className="content">
         <div className="info-section">
-          <p>🩵 압구정 데이트</p>
-          <p>💛 22년도</p>
+          <p>🩵 {testSet?.title}</p>
+          <p>💛 {testSet?.info}</p>
         </div>
         <div className="img-section">
           <h1>결과 화면</h1>
