@@ -21,7 +21,7 @@ export const RANDOM_BUBBLES = [
 export const SET = [
   {
     id: "set_1",
-    requiredItems: [
+    requiredItems: [ //상 하의 0 신발,악세 x
       "mg_top_201", "jh_top_201", "jh_top_202", 
       "mg_bottom_201", "jh_bottom_201"],
     title: "제주도 빈티지 편집샵 데이트",
@@ -83,11 +83,10 @@ export const SET = [
   // set_3: 압구정 데이트
   {
     id: "set_3",
-    requiredItems: [
-      "mg_top_203", "mg_top_204", "jh_top_205", "jh_top_206",
-      "mg_bottom_202", "jh_bottom_203",
+    requiredItems: [ //신발 x
+      "mg_top_203", "mg_top_204", "jh_top_203", "jh_top_205",
+      "mg_bottom_203", "jh_bottom_203",
       "mg_acc_202", "jh_acc_203",
-      // ⚠️ 압구정 태그 신발 없음 — 필요하면 Items.js에 추가 필요
     ],
     title: "압구정 데이트",
     info: "2022, 버르장머리없는자식",
@@ -125,13 +124,14 @@ export const SET = [
   // set_4: 모닝뽀뽀 (나나투어)
   {
     id: "set_4",
-    requiredItems: [
-      "jh_top_207",
-      "mg_bottom_203", "jh_bottom_204",
+    requiredItems: [ //민규 신발,악세 x
+      "jh_top_206",
+      "mg_bottom_204", "jh_bottom_204",
+      "jh_acc_05",
       "jh_acc_204",
       "jh_shoes_202",
     ],
-    excludeCategories: ["mg_top"],
+    excludeCategories: ["mg_top"], //민규 상의 제외
     title: "모닝뽀뽀",
     info: "나나투어, 뭐하는거야? 이쁘잖아",
     type: "bottomsheet",
@@ -159,8 +159,8 @@ export const SET = [
   {
     id: "set_5",
     requiredItems: [
-      "mg_top_205", "mg_top_206", "jh_top_208",
-      "mg_bottom_204", "jh_bottom_205",
+      "mg_top_205", "mg_top_206", "jh_top_207",
+      "mg_bottom_205", "jh_bottom_205",
       "mg_acc_203", "jh_acc_205",
       "mg_shoes_202", "jh_shoes_203",
     ],
