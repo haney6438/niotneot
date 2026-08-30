@@ -28,24 +28,26 @@
 
 .drag-start {
   cursor: grab;
-  touch-action: none; 
-  cursor: grab;
+  touch-action: none;
 }
 
-.drag-emoji {
+.drag-following {
   position: fixed;
   transform: translate(-50%, -50%);
-  font-size: 40px;
   pointer-events: none;
   z-index: 1000;
+  cursor: grabbing;
 }
 
-.dropzone{
+.dropzone {
   font-size: 50px;
   transition: transform 0.15s ease;
-  display: inline-block; 
+  display: inline-block;
 }
-.dropzone:hover{
+
+/* hover는 pc용으로 유지 */
+.dropzone:hover,
+.dropzone.hover {
   transform: scale(1.2);
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }

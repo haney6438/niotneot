@@ -1,61 +1,39 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import "../css/Start.css";
 
 function Start() {
   const navigate = useNavigate();
   const [dragging, setDragging] = useState(false);
   const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [hoverPath, setHoverPath] = useState(null);
+  const startRef = useRef(null);
 
-  // 마우스 이벤트든 터치 이벤트든 좌표만 뽑아내는 헬퍼
-  const getPoint = (e) => {
-    if (e.touches && e.touches.length > 0) {
-      return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    }
-    if (e.changedTouches && e.changedTouches.length > 0) {
-      return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
-    }
-    return { x: e.clientX, y: e.clientY };
-  };
-
-  const handleStart = (e) => {
-    const point = getPoint(e);
+  const handlePointerDown = (e) => {
+    e.target.setPointerCapture(e.pointerId); // 이 요소로 포인터 이벤트 고정
     setDragging(true);
-    setPos(point);
+    setPos({ x: e.clientX, y: e.clientY });
   };
 
-  useEffect(() => {
+  const handlePointerMove = (e) => {
     if (!dragging) return;
+    setPos({ x: e.clientX, y: e.clientY });
 
-    const handleMove = (e) => {
-      e.preventDefault(); // 모바일에서 화면 스크롤되는 거 방지
-      setPos(getPoint(e));
-    };
+    const target = document.elementFromPoint(e.clientX, e.clientY);
+    const dropZone = target?.closest("[data-dropzone]");
+    setHoverPath(dropZone ? dropZone.dataset.path : null);
+  };
 
-    const handleEnd = (e) => {
-      const point = getPoint(e);
-      const target = document.elementFromPoint(point.x, point.y);
-      const dropZone = target?.closest("[data-dropzone]");
+  const handlePointerUp = (e) => {
+    const target = document.elementFromPoint(e.clientX, e.clientY);
+    const dropZone = target?.closest("[data-dropzone]");
 
-      if (dropZone) {
-        const path = dropZone.dataset.path;
-        navigate(path);
-      }
-      setDragging(false);
-    };
-
-    window.addEventListener("mousemove", handleMove);
-    window.addEventListener("mouseup", handleEnd);
-    window.addEventListener("touchmove", handleMove, { passive: false });
-    window.addEventListener("touchend", handleEnd);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMove);
-      window.removeEventListener("mouseup", handleEnd);
-      window.removeEventListener("touchmove", handleMove);
-      window.removeEventListener("touchend", handleEnd);
-    };
-  }, [dragging, navigate]);
+    if (dropZone) {
+      navigate(dropZone.dataset.path);
+    }
+    setDragging(false);
+    setHoverPath(null);
+  };
 
   return (
     <div className="container">
@@ -65,29 +43,36 @@ function Start() {
       </div>
 
       <div className="choice-section">
-        {!dragging && (
-          <p
-            className="drag-start"
-            onMouseDown={handleStart}
-            onTouchStart={handleStart}
-          >
-            start
-          </p>
-        )}
+        <p
+          ref={startRef}
+          className={`drag-start ${dragging ? "drag-following" : ""}`}
+          style={dragging ? { left: pos.x, top: pos.y } : undefined}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+        >
+          start
+        </p>
 
         {dragging && (
           <>
-            <p className="dropzone" data-dropzone data-path="/main">🐶</p>
-            <p className="dropzone" data-dropzone data-path="/result">🐰</p>
+            <p
+              className={`dropzone ${hoverPath === "/main" ? "hover" : ""}`}
+              data-dropzone
+              data-path="/main"
+            >
+              🐶
+            </p>
+            <p
+              className={`dropzone ${hoverPath === "/result" ? "hover" : ""}`}
+              data-dropzone
+              data-path="/result"
+            >
+              🐰
+            </p>
           </>
         )}
       </div>
-
-      {dragging && (
-        <div className="drag-emoji" style={{ left: pos.x, top: pos.y }}>
-          🩲
-        </div>
-      )}
     </div>
   );
 }
