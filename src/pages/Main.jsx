@@ -36,47 +36,39 @@ function Main() {
   const [activeTab, setActiveTab] = useState("상의");
 
   const [wornItems, setWornItems] = useState({
-    top: null,
-    outer: null,
-    bottom: null,
-    shoes: null,
-    acc: null,
+    mg: { top: null, outer: null, bottom: null, shoes: null, acc: null },
+    jh: { top: null, outer: null, bottom: null, shoes: null, acc: null },
   });
 
   const handlePrevRoom = () => {
     setCurrentRoomIdx((prev) => (prev > 0 ? prev - 1 : ROOMS_DATA.length - 1));
-    setWornItems({
-      top: null,
-      outer: null,
-      bottom: null,
-      shoes: null,
-      acc: null,
-    });
   };
 
   const handleNextRoom = () => {
     setCurrentRoomIdx((prev) => (prev < ROOMS_DATA.length - 1 ? prev + 1 : 0));
-    setWornItems({
-      top: null,
-      outer: null,
-      bottom: null,
-      shoes: null,
-      acc: null,
-    });
   };
 
   const handleItemClick = (item) => {
+    const roomId = currentRoom.id; // "mg" | "jh"
+
     if (CAPE_TOP_IDS.includes(item.id)) {
       setWornItems((prev) => ({
         ...prev,
-        outer: prev.outer?.id === item.id ? null : item,
+        [roomId]: {
+          ...prev[roomId],
+          outer: prev[roomId].outer?.id === item.id ? null : item,
+        },
       }));
       return;
     }
 
     setWornItems((prev) => ({
       ...prev,
-      [item.category]: prev[item.category]?.id === item.id ? null : item,
+      [roomId]: {
+        ...prev[roomId],
+        [item.category]:
+          prev[roomId][item.category]?.id === item.id ? null : item,
+      },
     }));
   };
 
@@ -88,12 +80,7 @@ function Main() {
   );
 
   const handleGoDate = () => {
-    navigate("/result", {
-      state: {
-        character: currentRoom,
-        wornItems: wornItems,
-      },
-    });
+    navigate("/result", { state: { wornItems } }); // { mg: {...}, jh: {...} } 통째로
   };
 
   return (
@@ -151,25 +138,25 @@ function Main() {
                 className="layer-img layer-body"
               />
 
-              {wornItems.shoes && (
+              {wornItems[currentRoom.id].shoes && (
                 <img
-                  src={wornItems.shoes.image}
+                  src={wornItems[currentRoom.id].shoes.image}
                   alt="Shoes"
                   className="layer-img layer-shoes"
                 />
               )}
 
-              {wornItems.bottom && (
+              {wornItems[currentRoom.id].bottom && (
                 <img
-                  src={wornItems.bottom.image}
+                  src={wornItems[currentRoom.id].bottom.image}
                   alt="Bottom"
                   className="layer-img layer-bottom"
                 />
               )}
 
-              {wornItems.top && (
+              {wornItems[currentRoom.id].top && (
                 <img
-                  src={wornItems.top.image}
+                  src={wornItems[currentRoom.id].top.image}
                   alt="Top"
                   className="layer-img layer-top"
                 />
@@ -184,17 +171,17 @@ function Main() {
                 />
               )}
 
-              {wornItems.outer && (
+              {wornItems[currentRoom.id].outer && (
                 <img
-                  src={wornItems.outer.image}
+                  src={wornItems[currentRoom.id].outer.image}
                   alt="Outer"
                   className="layer-img layer-top-outer"
                 />
               )}
 
-              {wornItems.acc && (
+              {wornItems[currentRoom.id].acc && (
                 <img
-                  src={wornItems.acc.image}
+                  src={wornItems[currentRoom.id].acc.image}
                   alt="Acc"
                   className="layer-img layer-item"
                 />
@@ -218,8 +205,8 @@ function Main() {
             <div className="item-scroll-list">
               {filteredItems.map((item) => {
                 const isSelected = CAPE_TOP_IDS.includes(item.id)
-                  ? wornItems.outer?.id === item.id
-                  : wornItems[item.category]?.id === item.id;
+                  ? wornItems[currentRoom.id].outer?.id === item.id
+                  : wornItems[currentRoom.id][item.category]?.id === item.id;
 
                 return (
                   <div

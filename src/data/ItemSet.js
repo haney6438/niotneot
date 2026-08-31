@@ -1,9 +1,13 @@
 /* item 조합 파일 */
 
-// 아이템 미착용
-export const EMPTY_BUBBLE = [
-  "벗겨놓잖아? 꼴뚜기같아 느낌이",
-  "민규야 너무 과해"
+// 민규 미착용
+export const MG_EMPTY_BUBBLES = [
+  { text: "민규야 너무 과해", speaker: "jh" },
+];
+
+// 정한 미착용 (텍스트 채워주세요 - 자리만 잡아둠)
+export const JH_EMPTY_BUBBLES = [
+  { text: "벗겨놓잖아? 꼴뚜기같아 느낌이", speaker: "mg" },
 ];
 
 // 특정 아이템 하나만으로 발동하는 말풍선 (조합x 의상 착용 여부o)
