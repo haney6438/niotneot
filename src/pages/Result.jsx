@@ -1,5 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Particles from "react-tsparticles";
+import { loadStarsPreset } from "tsparticles-preset-stars";
 import BottomSheet from "../components/BottomSheet.jsx";
 import { getResult } from "../data/MatchItems.js";
 
@@ -10,6 +12,29 @@ import reBtn from "../assets/img/re-btn.png";
 import "../css/Result.css";
 
 const EMPTY_ROOM = { top: null, outer: null, bottom: null, shoes: null, acc: null };
+
+function SparkleBackground() {
+  const sparkles = Array.from({ length: 15 }, (_, i) => ({
+    id: i,
+    top: `${Math.random() * 100}%`,
+    left: `${Math.random() * 100}%`,
+    delay: `${Math.random() * 2}s`,
+  }));
+
+  return (
+    <div className="sparkle-bg">
+      {sparkles.map((s) => (
+        <span
+          key={s.id}
+          className="sparkle"
+          style={{ top: s.top, left: s.left, animationDelay: s.delay }}
+        >
+          ✶
+        </span>
+      ))}
+    </div>
+  );
+}
 
 function Result() {
   const navigate = useNavigate();
@@ -27,6 +52,7 @@ function Result() {
 
   return (
     <div className="result-container">
+    <SparkleBackground />
       <div className="result-content">
         <div className="result-info-section">
           {isSetMatched && (

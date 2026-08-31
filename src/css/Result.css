@@ -1,23 +1,37 @@
 .result-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    width: 100%;
-    padding: 40px 20px;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  padding: 30px 20px;
+  box-sizing: border-box;
+
+  background-image: url("../assets/img/result-bg-mobile.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (min-width: 768px) {
+  .result-container {
+    background-image: url("../assets/img/result-bg-pc.png");
+  }
 }
 
 .result-content {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .result-info-section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-left: 6%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 6%;
+}
+.result-info-section p{
+  font-size: 12px;
 }
 
 .result-img-section {
@@ -25,7 +39,8 @@
   justify-content: center;
   align-items: center;
   flex: 1;
-  position: relative; /* 말풍선 절대배치 기준 */
+  position: relative;
+  /* 말풍선 절대배치 기준 */
 }
 
 .speech-bubble {
@@ -43,11 +58,13 @@
 .speech-bubble--mg {
   right: 10%;
 }
+
 @media (min-width: 768px) {
   .speech-bubble--jh {
     left: calc(50% - 10%);
     transform: translateX(-100%);
   }
+
   .speech-bubble--mg {
     left: calc(50% + 10%);
   }
@@ -69,9 +86,9 @@
 }
 
 .result-btn-section {
-    flex-direction: column;
-    align-items: flex-start;
-    padding-left: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 0;
 
   position: fixed;
   bottom: calc(20vh + 8px);
@@ -80,8 +97,10 @@
   display: flex;
   justify-content: center;
 }
-.result-re-btn{
-  width: 140px;     /* 140:56 */
+
+.result-re-btn {
+  width: 140px;
+  /* 140:56 */
   height: 56px;
   background-size: contain;
   background-repeat: no-repeat;
@@ -90,4 +109,26 @@
   cursor: pointer;
   padding: 0;
   background-color: transparent;
+}
+
+.sparkle-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80%;
+  height: 80%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sparkle {
+  position: absolute;
+  font-size: 14px;
+  color:white;
+  animation: twinkle 1.8s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.7); }
+  50% { opacity: 1; transform: scale(1.1); }
 }
