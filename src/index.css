@@ -35,6 +35,10 @@
   --gray5: #E5E5EA;
   --gray6: #F2F2F7;
 
+  --yellow: #FEF785;
+  --blue: #6182B7;
+  --navy: #082567;
+
   @media (max-width: 1024px) {
     font-size: 16px;
   }
