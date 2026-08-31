@@ -1,4 +1,4 @@
-.container {
+.result-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -7,31 +7,87 @@
     box-sizing: border-box;
 }
 
-.content {
+.result-content {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-.info-section {
+.result-info-section {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding-left: 6%;
 }
 
-.img-section {
+.result-img-section {
   display: flex;
   justify-content: center;
   align-items: center;
   flex: 1;
+  position: relative; /* 말풍선 절대배치 기준 */
 }
 
-.btn-section {
+.speech-bubble {
+  position: absolute;
+  top: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.speech-bubble--jh {
+  left: 10%;
+}
+
+.speech-bubble--mg {
+  right: 10%;
+}
+@media (min-width: 768px) {
+  .speech-bubble--jh {
+    left: calc(50% - 10%);
+    transform: translateX(-100%);
+  }
+  .speech-bubble--mg {
+    left: calc(50% + 10%);
+  }
+}
+
+.speech-bubble__img {
+  display: block;
+  width: 140px;
+  height: auto;
+}
+
+.speech-bubble__text {
+  position: absolute;
+  max-width: 80%;
+  text-align: center;
+  font-size: 14px;
+  color: #000;
+  word-break: keep-all;
+}
+
+.result-btn-section {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 0;
+
   position: fixed;
-  bottom: calc(20vh + 30px);
-  left: 0;
-  right: 0;
+  bottom: calc(20vh + 8px);
+  /* left: 0;
+  right: 0; */
   display: flex;
   justify-content: center;
+}
+.result-re-btn{
+  width: 140px;     /* 140:56 */
+  height: 56px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  background-color: transparent;
 }

@@ -8,14 +8,14 @@ export const EMPTY_BUBBLE = [
 
 // 특정 아이템 하나만으로 발동하는 말풍선 (조합x 의상 착용 여부o)
 export const RANDOM_BUBBLES = [
-  "오~ 김밍규 ㅎㅎㅎ",
-  "너랑 나같다",
-  "멋진 밍구",
-  "가댜 김민규!",
-  "정한아? ㅎ",
-  "형 니는 옷이 그게 머냐",
-  "우린 운명이야 🖤",
-  "나 멋짖 멋짖 멋지지 맞ㅈ"
+  { text: "오~ 김밍규 ㅎㅎㅎ", speaker: "jh" },
+  { text: "너랑 나같다", speaker: "jh" },
+  { text: "멋진 밍구", speaker: "jh" },
+  { text: "가댜 김민규!", speaker: "jh" },
+  { text: "정한아? ㅎ", speaker: "mg" },
+  { text: "형 니는 옷이 그게 머냐", speaker: "mg" },
+  { text: "우린 운명이야 🖤", speaker: "mg" },
+  { text: "나 멋짖 멋짖 멋지지 맞ㅈ", speaker: "mg" },
 ];
 
 export const SET = [
