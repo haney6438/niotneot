@@ -1,4 +1,4 @@
-.container {
+.start-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -6,19 +6,39 @@
   min-height: 100vh;
   padding: 40px 20px;
   box-sizing: border-box;
-  gap: 120px;
+  gap: 80px;
   user-select: none; 
+
+  background-image: url("../assets/img/start-bg-mobile.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+@media (min-width: 768px) {
+  .start-container {
+    background-image: url("../assets/img/start-bg-pc.png");
+  }
 }
 
-.title-section {
+.start-title-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  margin-top: 40px;
+  gap: 16px;
+  margin-top: 90px;
+}
+.start-title {
+  width: 56%; 
+  max-width: 400px; 
+  height: auto;
+}
+.start-sub-title {
+  width: 22%; 
+  max-width: 158px; 
+  height: auto;
 }
 
-.choice-section {
+.start-choice-section {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,6 +49,10 @@
 .drag-start {
   cursor: grab;
   touch-action: none;
+  width: 10%;
+  min-width: 40px; 
+  max-width: 60px; 
+  height: auto;
 }
 
 .drag-following {
@@ -40,7 +64,7 @@
 }
 
 .dropzone {
-  font-size: 50px;
+  font-size: 40px;
   transition: transform 0.15s ease;
   display: inline-block;
 }

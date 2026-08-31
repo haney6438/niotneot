@@ -1,6 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
+
 import "../css/Start.css";
+
+import title from "../assets/img/title.png";
+import sub from "../assets/img/sub-title.png";
+import btn from "../assets/img/start-btn.png";
+import startImg from "../assets/img/start-btn.png";
 
 function Start() {
   const navigate = useNavigate();
@@ -36,23 +42,24 @@ function Start() {
   };
 
   return (
-    <div className="container">
-      <div className="title-section">
-        <h1>니옷내옷</h1>
-        <p>Unspoken Rule</p>
+    <div className="start-container">
+      <div className="start-title-section">
+        <img className="start-title" src={title} alt="title" />
+        <img className="start-sub-title" src={sub} alt="sub" />
       </div>
 
-      <div className="choice-section">
-        <p
+      <div className="start-choice-section">
+        <img
           ref={startRef}
+          src={startImg}
+          alt="start"
           className={`drag-start ${dragging ? "drag-following" : ""}`}
           style={dragging ? { left: pos.x, top: pos.y } : undefined}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
-        >
-          start
-        </p>
+          draggable={false}
+        />
 
         {dragging && (
           <>
