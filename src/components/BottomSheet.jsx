@@ -12,7 +12,7 @@ function BottomSheet({ content }) {
       open={true}
       dismissible={false}
       modal={false}
-      snapPoints={[0.2, 0.5, 0.9]}
+      snapPoints={[0.1, 0.5, 0.9]}
       activeSnapPoint={snap}
       setActiveSnapPoint={setSnap}
     >

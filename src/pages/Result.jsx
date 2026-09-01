@@ -1,7 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Particles from "react-tsparticles";
-import { loadStarsPreset } from "tsparticles-preset-stars";
+import confetti from "canvas-confetti";
 import BottomSheet from "../components/BottomSheet.jsx";
 import { getResult, resolveItemImage } from "../data/MatchItems.js";
 
@@ -105,8 +104,48 @@ function Result() {
   const isSetMatched = result?.type && result.type !== "bubble";
   const bubble = !isSetMatched ? result?.content : null;
 
+  // 세트 매칭됐을 때 컨페티 발사
+  useEffect(() => {
+    if (!isSetMatched) return;
+
+    const duration = 2000;
+    const end = Date.now() + duration;
+
+    const colors = ["#ffd4e5", "#bde0fe", "#ffffff", "#fff3b0"];
+
+    const frame = () => {
+      confetti({
+        particleCount: 4,
+        angle: 60,
+        spread: 55,
+        colors,
+        origin: { x: 0 },
+      });
+      confetti({
+        particleCount: 4,
+        angle: 120,
+        spread: 55,
+        colors,
+        origin: { x: 1 },
+      });
+
+      if (Date.now() < end) {
+        setTimeout(() => requestAnimationFrame(frame), 60);
+      }
+    };
+
+    frame();
+  }, [isSetMatched]);
+
   return (
-    <div className="result-container">
+    <div
+      className="result-container"
+      style={
+        isSetMatched && result.bgImage
+          ? { "--bg-image": `url(${result.bgImage})` }
+          : undefined
+      }
+    >
       <SparkleBackground />
       <div className="result-content">
         <div className="result-info-section">
@@ -136,9 +175,8 @@ function Result() {
         </div>
       </div>
       <div
-        className={`result-btn-section ${
-          isSetMatched ? "result-btn-section--with-sheet" : "result-btn-section--no-sheet"
-        }`}
+        className={`result-btn-section ${isSetMatched ? "result-btn-section--with-sheet" : "result-btn-section--no-sheet"
+          }`}
       >
         <button
           onClick={() => navigate("/")}

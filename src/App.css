@@ -21,6 +21,11 @@ body,
     sans-serif;
   user-select: none;
 }
+/*스크롤 예외 허용*/
+body.allow-scroll,
+body.allow-scroll #root {
+  overflow-y: auto;
+}
 
 .app-background {
   width: 100vw;

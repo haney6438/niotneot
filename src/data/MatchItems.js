@@ -46,6 +46,7 @@ export function getResult(wornItems) {
       title: matched.title,
       info: matched.info,
       content: matched.content,
+      bgImage: matched.bgImage,
     };
   }
 

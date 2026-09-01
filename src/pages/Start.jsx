@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import "../css/Start.css";
 
@@ -13,6 +13,13 @@ function Start() {
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [hoverRoom, setHoverRoom] = useState(null); // hoverPath -> hoverRoom
   const startRef = useRef(null);
+
+  useEffect(() => {
+    document.body.classList.add("allow-scroll");
+    return () => {
+      document.body.classList.remove("allow-scroll"); // 다른 페이지로 갈 때 자동 제거
+    };
+  }, []);
 
   const handlePointerDown = (e) => {
     e.target.setPointerCapture(e.pointerId);

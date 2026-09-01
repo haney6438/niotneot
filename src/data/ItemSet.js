@@ -26,11 +26,12 @@ export const SET = [
   {
     id: "set_1",
     requiredItems: [ //상 하의 0 신발,악세 x
-      "mg_top_201", "jh_top_201", "jh_top_202", 
+      "mg_top_201", "jh_top_201",
       "mg_bottom_201", "jh_bottom_201"],
     title: "제주도 빈티지 편집샵 데이트",
-    info: "2026, 남자가 빤스 좀 보일 수 있죠",
+    info: "2026",
     type: "bottomsheet",
+    bgImage: "/item-set-img/set1-bg-mobile.png",
     content: {
       links: [
         {
@@ -70,13 +71,13 @@ export const SET = [
       "mg_shoes_201", "jh_shoes_201",
     ],
     title: "홍콩 데이트",
-    info: "2026, 정한 복무 중에..ㄷㄷ",
+    info: "2026",
     type: "bottomsheet",
     content: {
       links: [
         {
           label: "목격담", //https://www.sotwe.com/TIANXIAOBINGA
-          url: "https://www.xiaohongshu.com/discovery/item/69a1488e00000000290308f6?source=webshare&xhsshare=pc_web&xsec_token=CBLFdNJAPhHTRBuAkfGjLYhwU6QmQGAJP04qccbHIHiQ4=&xsec_source=pc_share", 
+          url: "https://www.xiaohongshu.com/discovery/item/69a1488e00000000290308f6?source=webshare&xhsshare=pc_web&xsec_token=CBLFdNJAPhHTRBuAkfGjLYhwU6QmQGAJP04qccbHIHiQ4=&xsec_source=pc_share",
           image: "/link-img/set2_1.png",
           description: "香港偶遇金珉奎尹净汉260227 #seventeen #金珉奎#尹净汉#帅哥",
         },
@@ -93,8 +94,9 @@ export const SET = [
       "mg_acc_202", "jh_acc_203",
     ],
     title: "압구정 데이트",
-    info: "2022, 버르장머리없는자식",
+    info: "2022",
     type: "bottomsheet",
+    bgImage: "/item-set-img/set3-bg-mobile.png",
     content: {
       links: [
         {
@@ -148,7 +150,7 @@ export const SET = [
           description: "16분 42초~",
         },
         {
-          label: "영상 컷", 
+          label: "영상 컷",
           url: "https://x.com/JEONGHAN_moment/status/1748334286988779731?s=20",
           image: "/link-img/set4_2.png",
           description: `정한이 민규 자고있는데 볼뽀뽀 해줬더 ㅜ
@@ -169,8 +171,9 @@ export const SET = [
       "mg_shoes_202", "jh_shoes_203",
     ],
     title: "할로윈 규정",
-    info: "2015, 목동 팬싸",
+    info: "2015",
     type: "bottomsheet",
+    bgImage: "/item-set-img/set5-bg-mobile.png",
     content: {
       links: [
         {
