@@ -22,7 +22,7 @@ const CATEGORY_MAP = {
   상의: "top",
   하의: "bottom",
   신발: "shoes",
-  악세: "acc",
+  악세사리: "acc",
 };
 
 const CAPE_TOP_IDS = [
