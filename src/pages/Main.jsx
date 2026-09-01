@@ -26,7 +26,7 @@ const CATEGORY_MAP = {
 };
 
 const CAPE_TOP_IDS = [
-  "mg_top_205", "mg_top_206",
+  "mg_top_206",
   "jh_top_202","jh_top_204","jh_top_205"];
 
 function Main() {
