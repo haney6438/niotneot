@@ -3,13 +3,18 @@ import { useState, useEffect } from "react";
 import Particles from "react-tsparticles";
 import { loadStarsPreset } from "tsparticles-preset-stars";
 import BottomSheet from "../components/BottomSheet.jsx";
-import { getResult } from "../data/MatchItems.js";
+import { getResult, resolveItemImage } from "../data/MatchItems.js";
 
 import jhBubble from "../assets/img/jh-bubble.png";
 import mgBubble from "../assets/img/mg-bubble.png";
 import reBtn from "../assets/img/re-btn.png";
 
 import "../css/Result.css";
+
+const CHARACTER_BASE = {
+  mg: "/character-img/kmg-final.png",
+  jh: "/character-img/yjh.png",
+};
 
 const EMPTY_ROOM = { top: null, outer: null, bottom: null, shoes: null, acc: null };
 
@@ -36,6 +41,56 @@ function SparkleBackground() {
   );
 }
 
+function FinalCharacter({ roomId, room }) {
+  const characterImg = CHARACTER_BASE[roomId];
+
+  return (
+    <div className={`final-character-display final-character-display--${roomId}`}>
+      <img
+        src={characterImg}
+        alt={`${roomId} final pose`}
+        className="final-layer-img final-layer-body"
+      />
+
+      {room.shoes && (
+        <img
+          src={resolveItemImage(roomId, room.shoes.image)}
+          alt="shoes"
+          className="final-layer-img final-layer-shoes"
+        />
+      )}
+      {room.bottom && (
+        <img
+          src={resolveItemImage(roomId, room.bottom.image)}
+          alt="bottom"
+          className="final-layer-img final-layer-bottom"
+        />
+      )}
+      {room.top && (
+        <img
+          src={resolveItemImage(roomId, room.top.image)}
+          alt="top"
+          className="final-layer-img final-layer-top"
+        />
+      )}
+      {room.outer && (
+        <img
+          src={resolveItemImage(roomId, room.outer.image)}
+          alt="outer"
+          className="final-layer-img final-layer-top-outer"
+        />
+      )}
+      {room.acc && (
+        <img
+          src={resolveItemImage(roomId, room.acc.image)}
+          alt="acc"
+          className="final-layer-img final-layer-item"
+        />
+      )}
+    </div>
+  );
+}
+
 function Result() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -52,7 +107,7 @@ function Result() {
 
   return (
     <div className="result-container">
-    <SparkleBackground />
+      <SparkleBackground />
       <div className="result-content">
         <div className="result-info-section">
           {isSetMatched && (
@@ -73,7 +128,11 @@ function Result() {
               <span className="speech-bubble__text">{bubble.text}</span>
             </div>
           )}
-          <h1>결과 화면</h1>
+
+          <div className="final-characters-row">
+            <FinalCharacter roomId="mg" room={wornItems.mg} />
+            <FinalCharacter roomId="jh" room={wornItems.jh} />
+          </div>
         </div>
       </div>
       <div

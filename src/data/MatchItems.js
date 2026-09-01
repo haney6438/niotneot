@@ -52,3 +52,25 @@ export function getResult(wornItems) {
   // 4. 매칭 없으면 일반 랜덤
   return { type: "bubble", content: pickRandom(RANDOM_BUBBLES) };
 }
+
+/* 결과 화면 이미지 매칭 */
+export function getFinalCharacterImage(characterImg) {
+  const parts = characterImg.split("/");
+  const filename = parts.pop();
+  return [...parts, `final-${filename}`].join("/");
+}
+
+export function getFinalItemImage(itemImage) {
+  const parts = itemImage.split("/");
+  const filename = parts.pop();
+  return [...parts, "final-item-img", filename].join("/");
+}
+
+// roomId에 따라 mg만 변환, jh는 원본 그대로
+export function resolveCharacterImage(roomId, baseImg) {
+  return roomId === "mg" ? getFinalCharacterImage(baseImg) : baseImg;
+}
+
+export function resolveItemImage(roomId, itemImg) {
+  return roomId === "mg" ? getFinalItemImage(itemImg) : itemImg;
+}

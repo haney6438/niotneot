@@ -3,7 +3,7 @@
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  padding: 30px 20px;
+  padding: 40px 20px;
   box-sizing: border-box;
 
   background-image: url("../assets/img/result-bg-mobile.png");
@@ -22,6 +22,8 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  flex: 1;      /* 추가 */
+  min-height: 0;
 }
 
 .result-info-section {
@@ -39,6 +41,7 @@
   justify-content: center;
   align-items: center;
   flex: 1;
+  min-height: 0;
   position: relative;
   /* 말풍선 절대배치 기준 */
 }
@@ -131,4 +134,48 @@
 @keyframes twinkle {
   0%, 100% { opacity: 0.2; transform: scale(0.7); }
   50% { opacity: 1; transform: scale(1.1); }
+}
+
+.final-characters-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0px;
+  width: 100%;
+  padding-bottom: 90px;
+}
+
+.final-character-display {
+  position: relative;
+  overflow: hidden;
+  width: 80%;
+  max-width: 200px;
+  aspect-ratio: 1 / 2;
+  flex-shrink: 0;
+}
+
+.final-layer-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.final-layer-body { z-index: 10; }
+.final-layer-shoes { z-index: 25; }
+.final-layer-bottom { z-index: 30; }
+.final-layer-top { z-index: 35; }
+.final-layer-top-outer { z-index: 45; }
+.final-layer-item { z-index: 50; }
+
+.final-character-display--mg {
+  transform: translateX(46px); /* 오른쪽(가운데)으로 이동 */
+}
+
+.final-character-display--jh .final-layer-img {
+  transform: scale(0.96) translateX(-46px); 
+  transform-origin: center bottom;
 }
