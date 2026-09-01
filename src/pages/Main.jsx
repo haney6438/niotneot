@@ -25,9 +25,14 @@ const CATEGORY_MAP = {
   악세사리: "acc",
 };
 
-const CAPE_TOP_IDS = [
-  "mg_top_206",
-  "jh_top_202","jh_top_204","jh_top_205"];
+
+// 화면에 겹쳐서 깔릴 레이어 우선순위 (아래 -> 위)
+const CATEGORY_ORDER = {
+  shoes: 10,
+  bottom: 20,
+  top: 30,
+  acc: 50,
+};
 
 function Main() {
   const navigate = useNavigate();
@@ -57,9 +62,10 @@ function Main() {
   // 중앙 3초 토스트 메시지 상태
   const [toastMessage, setToastMessage] = useState(null);
 
+  // 캐릭터별 착용 중인 아이템 리스트 (배열 구조로 무제한 레이어드 지원)
   const [wornItems, setWornItems] = useState({
-    mg: { top: null, outer: null, bottom: null, shoes: null, acc: null },
-    jh: { top: null, outer: null, bottom: null, shoes: null, acc: null },
+    mg: [],
+    jh: [],
   });
 
   const handlePrevRoom = () => {
@@ -76,18 +82,16 @@ function Main() {
     setCurrentRoomIdx((prev) => (prev < ROOMS_DATA.length - 1 ? prev + 1 : 0));
   };
 
-  // 훔쳐오기 / 돌아가기 버튼 토글 핸들러
+  // 훔쳐오기 / 돌아가기 버튼 토글
   const handleStealToggle = () => {
     if (toastMessage) return;
 
     if (isStealMode) {
-      // 훔쳐오기 모드 중 '돌아가기' 클릭 시 원래 내 방으로 복귀
       const originalIdx = ROOMS_DATA.findIndex((r) => r.id === originalRoomId);
       setCurrentRoomIdx(originalIdx !== -1 ? originalIdx : 0);
       setIsStealMode(false);
       setOriginalRoomId(null);
     } else {
-      // 일반 모드 중 '훔쳐오기' 클릭 시 상대방 방으로 이동
       setOriginalRoomId(currentRoom.id);
       setIsStealMode(true);
       setCurrentRoomIdx((prev) => (prev === 0 ? 1 : 0));
@@ -97,10 +101,10 @@ function Main() {
   const handleItemClick = (item) => {
     if (toastMessage) return;
 
-    // [1] 훔쳐오기 모드일 때: 인벤토리 목록에만 추가
+    // [1] 훔쳐오기 모드: 내 보관함에 추가 후 복귀
     if (isStealMode && originalRoomId) {
       const itemNum = parseInt(item.id.split("_").pop(), 10);
-      const isStealable = itemNum >= 100; // 100번대 이상만 가능
+      const isStealable = itemNum >= 100;
 
       if (isStealable) {
         setStolenItems((prev) => {
@@ -122,7 +126,6 @@ function Main() {
         );
       }
 
-      // 3초 뒤 원래 방으로 복귀
       setTimeout(() => {
         const originalIdx = ROOMS_DATA.findIndex(
           (r) => r.id === originalRoomId,
@@ -136,33 +139,24 @@ function Main() {
       return;
     }
 
-    // [2] 일반 모드일 때: 터치 시 착용/해제
+    // [2] 일반 착용 모드: 배열에 토글 (클릭 시 무조건 추가/제거)
     const roomId = currentRoom.id;
+    setWornItems((prev) => {
+      const currentWorn = prev[roomId];
+      const isAlreadyWorn = currentWorn.some((i) => i.id === item.id);
 
-    if (CAPE_TOP_IDS.includes(item.id)) {
-      setWornItems((prev) => ({
+      return {
         ...prev,
-        [roomId]: {
-          ...prev[roomId],
-          outer: prev[roomId].outer?.id === item.id ? null : item,
-        },
-      }));
-      return;
-    }
-
-    setWornItems((prev) => ({
-      ...prev,
-      [roomId]: {
-        ...prev[roomId],
-        [item.category]:
-          prev[roomId][item.category]?.id === item.id ? null : item,
-      },
-    }));
+        [roomId]: isAlreadyWorn
+          ? currentWorn.filter((i) => i.id !== item.id) // 이미 입었으면 벗기
+          : [...currentWorn, item], // 안 입었으면 위에 겹쳐 입기
+      };
+    });
   };
 
   const currentCategoryKey = CATEGORY_MAP[activeTab];
 
-  // 훔쳐온 아이템 중 현재 탭 카테고리에 맞는 항목
+  // 훔쳐온 아이템 중 현재 탭에 맞는 항목
   const myStolenCategoryItems = isStealMode
     ? []
     : stolenItems[currentRoom.id].filter(
@@ -176,8 +170,15 @@ function Main() {
       item.category === currentCategoryKey,
   );
 
-  // 최종 노출 목록: 훔쳐온 옷(맨 위) + 기본 옷
+  // 최종 노출 목록
   const filteredItems = [...myStolenCategoryItems, ...baseCategoryItems];
+
+  // 착용 중인 아이템들을 카테고리/선택 순서대로 정렬하여 렌더링
+  const sortedWornItems = [...wornItems[currentRoom.id]].sort((a, b) => {
+    return (
+      (CATEGORY_ORDER[a.category] || 30) - (CATEGORY_ORDER[b.category] || 30)
+    );
+  });
 
   const handleGoDate = () => {
     navigate("/result", { state: { wornItems } });
@@ -216,7 +217,6 @@ function Main() {
               뒤로
             </button>
             <div className="room-nav">
-              {/* 훔쳐오기 모드가 아닐 때만 좌측 화살표 표시 */}
               {!isStealMode && (
                 <button className="arrow-btn" onClick={handlePrevRoom}>
                   ◀
@@ -227,14 +227,12 @@ function Main() {
                   ? ` ${currentRoom.title} (훔쳐오는 중)`
                   : currentRoom.title}
               </span>
-              {/* 훔쳐오기 모드가 아닐 때만 우측 화살표 표시 */}
               {!isStealMode && (
                 <button className="arrow-btn" onClick={handleNextRoom}>
                   ▶
                 </button>
               )}
             </div>
-            {/* 훔쳐오기 모드 여부에 따라 '훔쳐오기' / '돌아가기' 텍스트 및 동작 변경 */}
             <button className="nav-btn home-btn" onClick={handleStealToggle}>
               {isStealMode ? "돌아가기" : "훔쳐오기"}
             </button>
@@ -245,36 +243,27 @@ function Main() {
         <main className="dressing-room-content">
           <section className="left-character-zone">
             <div className="character-display">
+              {/* 기본 몸체 */}
               <img
                 src={currentRoom.characterImg}
                 alt="Body"
                 className="layer-img layer-body"
               />
 
-              {wornItems[currentRoom.id].shoes && (
+              {/* 착용한 모든 옷 겹쳐서 출력 */}
+              {sortedWornItems.map((item, index) => (
                 <img
-                  src={wornItems[currentRoom.id].shoes.image}
-                  alt="Shoes"
-                  className="layer-img layer-shoes"
+                  key={item.id}
+                  src={item.image}
+                  alt={item.name}
+                  className="layer-img"
+                  style={{
+                    zIndex: (CATEGORY_ORDER[item.category] || 30) + index,
+                  }}
                 />
-              )}
+              ))}
 
-              {wornItems[currentRoom.id].bottom && (
-                <img
-                  src={wornItems[currentRoom.id].bottom.image}
-                  alt="Bottom"
-                  className="layer-img layer-bottom"
-                />
-              )}
-
-              {wornItems[currentRoom.id].top && (
-                <img
-                  src={wornItems[currentRoom.id].top.image}
-                  alt="Top"
-                  className="layer-img layer-top"
-                />
-              )}
-
+              {/* 손 레이어 (상의 위에 위치) */}
               {currentRoom.handImg && (
                 <img
                   src={currentRoom.handImg}
@@ -283,25 +272,10 @@ function Main() {
                   onError={(e) => (e.target.style.display = "none")}
                 />
               )}
-
-              {wornItems[currentRoom.id].outer && (
-                <img
-                  src={wornItems[currentRoom.id].outer.image}
-                  alt="Outer"
-                  className="layer-img layer-top-outer"
-                />
-              )}
-
-              {wornItems[currentRoom.id].acc && (
-                <img
-                  src={wornItems[currentRoom.id].acc.image}
-                  alt="Acc"
-                  className="layer-img layer-item"
-                />
-              )}
             </div>
           </section>
 
+          {/* 옷장 목록 */}
           <section className="right-closet-zone">
             <div className="category-tabs">
               {["상의", "하의", "신발", "악세사리"].map((tab) => (
@@ -316,10 +290,9 @@ function Main() {
 
             <div className="item-scroll-list">
               {filteredItems.map((item) => {
-                const isSelected = CAPE_TOP_IDS.includes(item.id)
-                  ? wornItems[currentRoom.id].outer?.id === item.id
-                  : wornItems[currentRoom.id][item.category]?.id === item.id;
-
+                const isSelected = wornItems[currentRoom.id].some(
+                  (i) => i.id === item.id,
+                );
                 const isStolenItem = !item.id.startsWith(currentRoom.id);
 
                 return (
@@ -349,7 +322,7 @@ function Main() {
           </button>
         </footer>
 
-        {/* 중앙 3초 알림 토스트 박스 */}
+        {/* 중앙 3초 토스트 박스 */}
         {toastMessage && (
           <div className="steal-toast-popup">
             <div className="steal-toast-text">{toastMessage}</div>

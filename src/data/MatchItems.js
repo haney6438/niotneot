@@ -5,31 +5,31 @@ function pickRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+// room은 이제 배열. bottom 카테고리 아이템이 하나라도 있으면 착용으로 침
 function isRoomEmpty(room) {
-  return room.bottom === null; // 하의 미착용 = 미착용으로 침
+  return !room.some((item) => item.category === "bottom");
 }
 
 export function getWornIds(wornItems) {
-  return [wornItems.mg, wornItems.jh]
-    .flatMap((room) => Object.values(room))
-    .filter(Boolean)
-    .map((item) => item.id);
+  return [...wornItems.mg, ...wornItems.jh].map((item) => item.id);
+}
+
+// 카테고리별로 하나씩 꺼내기 (FinalCharacter에서 쓰기 위해)
+export function getItemByCategory(room, category) {
+  return room.find((item) => item.category === category) ?? null;
 }
 
 export function getResult(wornItems) {
-  // 1. 민규 미착용
   if (isRoomEmpty(wornItems.mg)) {
     return { type: "bubble", content: pickRandom(MG_EMPTY_BUBBLES) };
   }
 
-  // 2. 정한 미착용
   if (isRoomEmpty(wornItems.jh)) {
     return { type: "bubble", content: pickRandom(JH_EMPTY_BUBBLES) };
   }
 
   const wornIds = getWornIds(wornItems);
 
-  // 3. 세트 매칭
   const matched = SET.find((set) => {
     const hasAllRequired = set.requiredItems.every((id) => wornIds.includes(id));
     if (!hasAllRequired) return false;
@@ -50,26 +50,13 @@ export function getResult(wornItems) {
     };
   }
 
-  // 4. 매칭 없으면 일반 랜덤
   return { type: "bubble", content: pickRandom(RANDOM_BUBBLES) };
-}
-
-/* 결과 화면 이미지 매칭 */
-export function getFinalCharacterImage(characterImg) {
-  const parts = characterImg.split("/");
-  const filename = parts.pop();
-  return [...parts, `final-${filename}`].join("/");
 }
 
 export function getFinalItemImage(itemImage) {
   const parts = itemImage.split("/");
   const filename = parts.pop();
   return [...parts, "final-item-img", filename].join("/");
-}
-
-// roomId에 따라 mg만 변환, jh는 원본 그대로
-export function resolveCharacterImage(roomId, baseImg) {
-  return roomId === "mg" ? getFinalCharacterImage(baseImg) : baseImg;
 }
 
 export function resolveItemImage(roomId, itemImg) {
