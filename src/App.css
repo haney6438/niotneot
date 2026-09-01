@@ -313,14 +313,15 @@ body.allow-scroll #root {
   box-shadow: 0 2px 4px rgba(39, 93, 163, 0.2);
 }
 
+/* 2열 균등 배치 리스트 */
 .item-scroll-list {
   flex: 1;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-auto-rows: 84px;
   gap: 6px;
   overflow-y: auto;
-  padding-right: 2px;
+  padding: 2px;
+  align-content: start;
 }
 
 .item-scroll-list::-webkit-scrollbar {
@@ -331,17 +332,19 @@ body.allow-scroll #root {
   border-radius: 3px;
 }
 
+/* 정사각형 1:1 고정 카드 */
 .item-row-card {
   position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(2px);
   border: 1.5px dashed rgba(107, 180, 248, 0.7);
-  border-radius: 10px;
-  padding: 4px 2px;
+  border-radius: 12px;
+  padding: 6px;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
   cursor: pointer;
   transition: all 0.15s ease;
 }
@@ -352,40 +355,42 @@ body.allow-scroll #root {
   background: rgba(255, 255, 255, 0.95);
 }
 
+/* 기본 선택 상태 (배경 유지) */
 .item-row-card.selected {
+  border: 2px solid #275da3;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: none;
+}
+
+/* 훔쳐온 아이템 (노란색 실선) */
+.item-row-card.stolen {
   border: 2px solid #ffcc00;
-  background: rgba(255, 253, 230, 0.95);
-  box-shadow: 0 2px 6px rgba(255, 204, 0, 0.3);
+}
+
+.item-row-card.stolen:hover {
+  border: 2px solid #ffbb00;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* 훔쳐온 아이템 선택 상태 (배경 유지) */
+.item-row-card.stolen.selected {
+  border: 2px solid #e5b800;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: none;
 }
 
 .item-thumb {
-  flex: 1;
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .item-thumb img {
-  max-width: 48px;
-  max-height: 48px;
-  object-fit: contain;
-}
-
-.item-text {
   width: 100%;
-  text-align: center;
-}
-
-.item-name {
-  font-size: 9px;
-  font-weight: 800;
-  color: #275da3;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-  display: block;
+  height: 100%;
+  object-fit: contain;
 }
 
 .app-footer-action {
@@ -416,4 +421,42 @@ body.allow-scroll #root {
 .date-go-btn:hover {
   background: #1d4880;
   transform: scale(1.02);
+}
+
+/* 훔쳐오기 결과 토스트 팝업 (중앙 3초 알림) */
+.steal-toast-popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 2px solid #275da3;
+  border-radius: 18px;
+  padding: 16px 24px;
+  box-shadow: 0 10px 30px rgba(39, 93, 163, 0.25);
+  z-index: 100;
+  text-align: center;
+  pointer-events: none;
+  animation: popIn 0.2s ease-out;
+}
+
+.steal-toast-text {
+  font-size: 13px;
+  font-weight: 800;
+  color: #275da3;
+  line-height: 1.4;
+  white-space: pre-line;
+}
+
+@keyframes popIn {
+  from {
+    transform: translate(-50%, -45%) scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
 }
