@@ -25,7 +25,9 @@ const CATEGORY_MAP = {
   악세: "acc",
 };
 
-const CAPE_TOP_IDS = ["mg_top_205", "mg_top_206", "jh_top_208"];
+const CAPE_TOP_IDS = [
+  "mg_top_205", "mg_top_206",
+  "jh_top_202","jh_top_204","jh_top_205"];
 
 function Main() {
   const navigate = useNavigate();

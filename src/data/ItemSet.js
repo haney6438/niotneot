@@ -89,7 +89,7 @@ export const SET = [
   {
     id: "set_3",
     requiredItems: [ //신발 x
-      "mg_top_203", "mg_top_204", "jh_top_203", "jh_top_205",
+      "mg_top_203", "jh_top_203", "jh_top_205",
       "mg_bottom_203", "jh_bottom_203",
       "mg_acc_202", "jh_acc_203",
     ],

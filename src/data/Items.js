@@ -77,12 +77,12 @@ export const ITEMS = [
     category: "top",
     image: "/item-img/mg_top_203.png",
   }, //조합템
-  {
-    id: "mg_top_204",
-    name: "민규 압구정 상의2",
-    category: "top",
-    image: "/item-img/mg_top_204.png",
-  }, //조합템
+  // {
+  //   id: "mg_top_204",
+  //   name: "민규 압구정 상의2",
+  //   category: "top",
+  //   image: "/item-img/mg_top_204.png",
+  // }, //조합템
   {
     id: "mg_top_205",
     name: "민규 15할로윈 상의1",
