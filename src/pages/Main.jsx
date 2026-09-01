@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { ITEMS } from "../data/Items";
 import "../App.css";
 
@@ -29,8 +29,15 @@ const CAPE_TOP_IDS = ["mg_top_205", "mg_top_206", "jh_top_208"];
 
 function Main() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [currentRoomIdx, setCurrentRoomIdx] = useState(0);
+  // Start.jsx에서 넘어온 값({ state: { room: "mg" | "jh" } }) 읽기
+  const requestedRoomId = location.state?.room;
+  const initialIdx = ROOMS_DATA.findIndex((r) => r.id === requestedRoomId);
+
+  const [currentRoomIdx, setCurrentRoomIdx] = useState(
+    initialIdx !== -1 ? initialIdx : 0
+  );
   const currentRoom = ROOMS_DATA[currentRoomIdx];
 
   const [activeTab, setActiveTab] = useState("상의");
