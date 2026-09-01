@@ -26,7 +26,7 @@ export const SET = [
   {
     id: "set_1",
     requiredItems: [ //상 하의 0 신발,악세 x
-      "mg_top_201", "jh_top_201",
+      "mg_top_201", "jh_top_201","jh_top_202",
       "mg_bottom_201", "jh_bottom_201"],
     title: "제주도 빈티지 편집샵 데이트",
     info: "2026",
