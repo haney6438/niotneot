@@ -63,25 +63,35 @@ function Main() {
   });
 
   const handlePrevRoom = () => {
-    if (toastMessage) return;
+    if (toastMessage || isStealMode) return;
     setIsStealMode(false);
     setOriginalRoomId(null);
     setCurrentRoomIdx((prev) => (prev > 0 ? prev - 1 : ROOMS_DATA.length - 1));
   };
 
   const handleNextRoom = () => {
-    if (toastMessage) return;
+    if (toastMessage || isStealMode) return;
     setIsStealMode(false);
     setOriginalRoomId(null);
     setCurrentRoomIdx((prev) => (prev < ROOMS_DATA.length - 1 ? prev + 1 : 0));
   };
 
-  // 훔쳐오기 시작 -> 상대방 방으로 이동
-  const handleStartSteal = () => {
+  // 훔쳐오기 / 돌아가기 버튼 토글 핸들러
+  const handleStealToggle = () => {
     if (toastMessage) return;
-    setOriginalRoomId(currentRoom.id);
-    setIsStealMode(true);
-    setCurrentRoomIdx((prev) => (prev === 0 ? 1 : 0));
+
+    if (isStealMode) {
+      // 훔쳐오기 모드 중 '돌아가기' 클릭 시 원래 내 방으로 복귀
+      const originalIdx = ROOMS_DATA.findIndex((r) => r.id === originalRoomId);
+      setCurrentRoomIdx(originalIdx !== -1 ? originalIdx : 0);
+      setIsStealMode(false);
+      setOriginalRoomId(null);
+    } else {
+      // 일반 모드 중 '훔쳐오기' 클릭 시 상대방 방으로 이동
+      setOriginalRoomId(currentRoom.id);
+      setIsStealMode(true);
+      setCurrentRoomIdx((prev) => (prev === 0 ? 1 : 0));
+    }
   };
 
   const handleItemClick = (item) => {
@@ -206,20 +216,27 @@ function Main() {
               뒤로
             </button>
             <div className="room-nav">
-              <button className="arrow-btn" onClick={handlePrevRoom}>
-                ◀
-              </button>
+              {/* 훔쳐오기 모드가 아닐 때만 좌측 화살표 표시 */}
+              {!isStealMode && (
+                <button className="arrow-btn" onClick={handlePrevRoom}>
+                  ◀
+                </button>
+              )}
               <span className="room-title">
                 {isStealMode
                   ? ` ${currentRoom.title} (훔쳐오는 중)`
                   : currentRoom.title}
               </span>
-              <button className="arrow-btn" onClick={handleNextRoom}>
-                ▶
-              </button>
+              {/* 훔쳐오기 모드가 아닐 때만 우측 화살표 표시 */}
+              {!isStealMode && (
+                <button className="arrow-btn" onClick={handleNextRoom}>
+                  ▶
+                </button>
+              )}
             </div>
-            <button className="nav-btn home-btn" onClick={handleStartSteal}>
-              훔쳐오기
+            {/* 훔쳐오기 모드 여부에 따라 '훔쳐오기' / '돌아가기' 텍스트 및 동작 변경 */}
+            <button className="nav-btn home-btn" onClick={handleStealToggle}>
+              {isStealMode ? "돌아가기" : "훔쳐오기"}
             </button>
           </div>
         </div>
