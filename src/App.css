@@ -460,3 +460,126 @@ body.allow-scroll #root {
     opacity: 1;
   }
 }
+
+/* =========================================================
+   훔쳐오기 모드
+   ========================================================= */
+
+/* PC : 전체 화면 어둡게 + 마우스 손전등 */
+.steal-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+
+  background: radial-gradient(
+    circle 100px at var(--mouse-x) var(--mouse-y),
+    transparent 0%,
+    transparent 45%,
+    rgba(0, 0, 0, 0.18) 65%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* 훔쳐오기 안내 문구 */
+.steal-guide-text {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  z-index: 55;
+  pointer-events: none;
+
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  animation: stealGuideFade 0.25s ease-out;
+}
+
+@keyframes stealGuideFade {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+
+/* =========================================================
+   모바일
+   ========================================================= */
+
+/* 모바일 : 손전등 없이 화면 전체 어둡게 */
+@media (max-width: 768px) {
+  .steal-overlay {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .steal-guide-text {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+}
+
+
+/* =========================================================
+   훔쳐오기 결과 팝업
+   ========================================================= */
+
+.steal-toast-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  z-index: 100;
+
+  min-width: 240px;
+  max-width: 80%;
+
+  padding: 20px 24px;
+
+  background: rgba(255, 255, 255, 0.96);
+  border: 2px solid #222;
+  border-radius: 18px;
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+
+  text-align: center;
+}
+
+.steal-toast-text {
+  color: #222;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+
+/* =========================================================
+   모바일 훔쳐오기 팝업
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .steal-toast-popup {
+    min-width: 200px;
+    padding: 16px 20px;
+  }
+
+  .steal-toast-text {
+    font-size: 13px;
+  }
+}
