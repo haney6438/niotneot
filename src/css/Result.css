@@ -173,7 +173,7 @@
   transform: translateX(46px); /* 오른쪽(가운데)으로 이동 */
 }
 
-.final-character-display--jh .final-layer-img {
-  transform: scale(0.96) translateX(-46px); 
+.final-character-display--jh {
+  transform: scale(0.96) translateX(-46px);
   transform-origin: center bottom;
 }

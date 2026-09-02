@@ -336,48 +336,56 @@ export const ITEMS = [
     name: "민규 머리고무줄",
     category: "acc",
     image: "/item-img/mg_acc_01.png",
+    thumbnail: "/item-thumb-img/mg_acc_01.png",
   },
   {
     id: "mg_acc_02",
     name: "민규 생케",
     category: "acc",
     image: "/item-img/mg_acc_02.png",
+    thumbnail: "/item-thumb-img/mg_acc_02.png",
   },
   {
     id: "mg_acc_03",
     name: "민규 선글라스",
     category: "acc",
     image: "/item-img/mg_acc_03.png",
+    thumbnail: "/item-thumb-img/mg_acc_03.png",
   },
   {
     id: "mg_acc_04",
     name: "민규 양말",
     category: "acc",
     image: "/item-img/mg_acc_04.png",
+    thumbnail: "/item-thumb-img/mg_acc_04.png",
   },
   {
     id: "mg_acc_05",
     name: "민규 곰돌이 팬티",
     category: "acc",
     image: "/item-img/mg_acc_05.png",
+    thumbnail: "/item-thumb-img/mg_acc_05.png",
   },
   {
     id: "mg_acc_06",
     name: "민규 덮머",
     category: "acc",
     image: "/item-img/mg_acc_06.png",
+    thumbnail: "/item-thumb-img/mg_acc_06.png",
   },
   {
     id: "mg_acc_07",
     name: "민규 깐머",
     category: "acc",
     image: "/item-img/mg_acc_07.png",
+    thumbnail: "/item-thumb-img/mg_acc_07.png",
   },
   {
     id: "mg_acc_08",
     name: "민규 장발",
     category: "acc",
     image: "/item-img/mg_acc_08.png",
+    thumbnail: "/item-thumb-img/mg_acc_08.png",
   },
 
   {
@@ -385,12 +393,14 @@ export const ITEMS = [
     name: "민규 얇테 안경",
     category: "acc",
     image: "/item-img/mg_acc_101.png",
+    thumbnail: "/item-thumb-img/mg_acc_101.png",
   }, // 공유템
   {
     id: "mg_acc_102",
     name: "민규 캘빈 팬티",
     category: "acc",
     image: "/item-img/mg_acc_102.png",
+    thumbnail: "/item-thumb-img/mg_acc_102.png",
   }, // 공유템
 
   {
@@ -398,18 +408,21 @@ export const ITEMS = [
     name: "민규 홍콩 모자",
     category: "acc",
     image: "/item-img/mg_acc_201.png",
+    thumbnail: "/item-thumb-img/mg_acc_201.png",
   }, // 조합템
   {
     id: "mg_acc_202",
     name: "민규 압구정 가방",
     category: "acc",
     image: "/item-img/mg_acc_202.png",
+    thumbnail: "/item-thumb-img/mg_acc_202.png",
   }, // 조합템
   {
     id: "mg_acc_203",
     name: "민규 15할로윈 분장",
     category: "acc",
     image: "/item-img/mg_acc_203.png",
+    thumbnail: "/item-thumb-img/mg_acc_203.png",
   }, // 조합템
 
   // - 정한
@@ -418,48 +431,56 @@ export const ITEMS = [
     name: "정한 빨간 볼캡",
     category: "acc",
     image: "/item-img/jh_acc_01.png",
+    thumbnail: "/item-thumb-img/jh_acc_01.png",
   },
   {
     id: "jh_acc_02",
     name: "정한 검정 볼캡",
     category: "acc",
     image: "/item-img/jh_acc_02.png",
+    thumbnail: "/item-thumb-img/jh_acc_02.png",
   },
   {
     id: "jh_acc_03",
     name: "정한 염주",
     category: "acc",
     image: "/item-img/jh_acc_03.png",
+    thumbnail: "/item-thumb-img/jh_acc_03.png",
   },
   {
     id: "jh_acc_04",
     name: "정한 생로랑 팔찌",
     category: "acc",
     image: "/item-img/jh_acc_04.png",
+    thumbnail: "/item-thumb-img/jh_acc_04.png",
   },
   {
     id: "jh_acc_05",
     name: "정한 양말",
     category: "acc",
     image: "/item-img/jh_acc_05.png",
+    thumbnail: "/item-thumb-img/jh_acc_05.png",
   },
   {
     id: "jh_acc_06",
     name: "정한 흑발",
     category: "acc",
     image: "/item-img/jh_acc_06.png",
+    thumbnail: "/item-thumb-img/jh_acc_06.png",
   },
   {
     id: "jh_acc_07",
     name: "정한 금발",
     category: "acc",
     image: "/item-img/jh_acc_07.png",
+    thumbnail: "/item-thumb-img/jh_acc_07.png",
   },
   {
     id: "jh_acc_08",
     name: "정한 장발",
     category: "acc",
     image: "/item-img/jh_acc_08.png",
+    thumbnail: "/item-thumb-img/jh_acc_08.png",
   },
 
   {
@@ -467,12 +488,14 @@ export const ITEMS = [
     name: "정한 크롬하츠 안경",
     category: "acc",
     image: "/item-img/jh_acc_101.png",
+    thumbnail: "/item-thumb-img/jh_acc_101.png",
   }, // 공유템
   {
     id: "jh_acc_102",
     name: "정한 프라다 가방",
     category: "acc",
     image: "/item-img/jh_acc_102.png",
+    thumbnail: "/item-thumb-img/jh_acc_102.png",
   }, // 공유템
 
   {
@@ -480,32 +503,37 @@ export const ITEMS = [
     name: "정한 홍콩 모자",
     category: "acc",
     image: "/item-img/jh_acc_201.png",
+    thumbnail: "/item-thumb-img/jh_acc_201.png",
   }, // 조합템
   {
     id: "jh_acc_202",
     name: "정한 홍콩 마스크",
     category: "acc",
     image: "/item-img/jh_acc_202.png",
+    thumbnail: "/item-thumb-img/jh_acc_202.png",
   }, // 조합템
   {
     id: "jh_acc_203",
     name: "정한 압구정 가방",
     category: "acc",
     image: "/item-img/jh_acc_203.png",
+    thumbnail: "/item-thumb-img/jh_acc_203.png",
   }, // 조합템
   {
     id: "jh_acc_204",
     name: "정한 나나투어 가방",
     category: "acc",
     image: "/item-img/jh_acc_204.png",
+    thumbnail: "/item-thumb-img/jh_acc_204.png",
   }, // 조합템
   {
     id: "jh_acc_205",
     name: "정한 15할로윈 분장",
     category: "acc",
     image: "/item-img/jh_acc_205.png",
+    thumbnail: "/item-thumb-img/jh_acc_205.png",
   }, // 조합템
-
+  
   // ------ 신발 -------
   // - 민규
   {
@@ -513,24 +541,28 @@ export const ITEMS = [
     name: "민규 반스 신발",
     category: "shoes",
     image: "/item-img/mg_shoes_01.png",
+    thumbnail: "/item-thumb-img/mg_shoes_01.png",
   },
   {
     id: "mg_shoes_02",
     name: "민규 로퍼 신발",
     category: "shoes",
     image: "/item-img/mg_shoes_02.png",
+    thumbnail: "/item-thumb-img/mg_shoes_02.png",
   },
   {
     id: "mg_shoes_03",
     name: "민규 몽클레어 운동화",
     category: "shoes",
     image: "/item-img/mg_shoes_03.png",
+    thumbnail: "/item-thumb-img/mg_shoes_03.png",
   }, // 커플템
   {
     id: "mg_shoes_04",
     name: "민규 보테가 슬리퍼",
     category: "shoes",
     image: "/item-img/mg_shoes_04.png",
+    thumbnail: "/item-thumb-img/mg_shoes_04.png",
   }, // 커플템
 
   {
@@ -538,12 +570,14 @@ export const ITEMS = [
     name: "민규 홍콩 신발",
     category: "shoes",
     image: "/item-img/mg_shoes_201.png",
+    thumbnail: "/item-thumb-img/mg_shoes_201.png",
   }, // 조합템
   {
     id: "mg_shoes_202",
     name: "민규 15할로윈 신발",
     category: "shoes",
     image: "/item-img/mg_shoes_202.png",
+    thumbnail: "/item-thumb-img/mg_shoes_202.png",
   }, // 조합템
 
   // - 정한
@@ -552,18 +586,21 @@ export const ITEMS = [
     name: "정한 베이지 운동화",
     category: "shoes",
     image: "/item-img/jh_shoes_01.png",
+    thumbnail: "/item-thumb-img/jh_shoes_01.png",
   },
   {
     id: "jh_shoes_02",
     name: "정한 몽클레어 운동화",
     category: "shoes",
     image: "/item-img/jh_shoes_02.png",
+    thumbnail: "/item-thumb-img/jh_shoes_02.png",
   }, // 커플템
   {
     id: "jh_shoes_03",
     name: "정한 보테가 슬리퍼",
     category: "shoes",
     image: "/item-img/jh_shoes_03.png",
+    thumbnail: "/item-thumb-img/jh_shoes_03.png",
   }, // 커플템
 
   {
@@ -571,17 +608,20 @@ export const ITEMS = [
     name: "정한 홍콩 신발",
     category: "shoes",
     image: "/item-img/jh_shoes_201.png",
+    thumbnail: "/item-thumb-img/jh_shoes_201.png",
   }, // 조합템
   {
     id: "jh_shoes_202",
     name: "정한 나나투어 신발",
     category: "shoes",
     image: "/item-img/jh_shoes_202.png",
+    thumbnail: "/item-thumb-img/jh_shoes_202.png",
   }, // 조합템
   {
     id: "jh_shoes_203",
     name: "정한 15할로윈 신발",
     category: "shoes",
     image: "/item-img/jh_shoes_203.png",
+    thumbnail: "/item-thumb-img/jh_shoes_203.png",
   }, // 조합템
 ];
