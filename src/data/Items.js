@@ -388,13 +388,13 @@ export const ITEMS = [
     thumbnail: "/item-thumb-img/mg_acc_08.png",
   },
 
-  {
-    id: "mg_acc_101",
-    name: "민규 얇테 안경",
-    category: "acc",
-    image: "/item-img/mg_acc_101.png",
-    thumbnail: "/item-thumb-img/mg_acc_101.png",
-  }, // 공유템
+  // {
+  //   id: "mg_acc_101",
+  //   name: "민규 얇테 안경",
+  //   category: "acc",
+  //   image: "/item-img/mg_acc_101.png",
+  //   thumbnail: "/item-thumb-img/mg_acc_101.png",
+  // }, // 공유템
   {
     id: "mg_acc_102",
     name: "민규 캘빈 팬티",
