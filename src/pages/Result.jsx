@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 import BottomSheet from "../components/BottomSheet.jsx";
-import { getResult, resolveItemImage, getItemByCategory } from "../data/MatchItems.js";
+import { getResult, resolveItemImage } from "../data/MatchItems.js";
 
 import jhBubble from "../assets/img/jh-bubble.png";
 import mgBubble from "../assets/img/mg-bubble.png";
@@ -15,7 +15,7 @@ const CHARACTER_BASE = {
   jh: "/character-img/yjh.png",
 };
 
-const EMPTY_ROOM = [];
+const EMPTY_ROOM = { top: null, outer: null, bottom: null, shoes: null, acc: [] };
 
 function SparkleBackground() {
   const sparkles = Array.from({ length: 15 }, (_, i) => ({
@@ -43,32 +43,28 @@ function SparkleBackground() {
 function FinalCharacter({ roomId, room }) {
   const characterImg = CHARACTER_BASE[roomId];
 
-  // 카테고리별 z-index 우선순위 (Main.jsx의 CATEGORY_ORDER와 동일한 기준)
-  const CATEGORY_LAYER_CLASS = {
-    shoes: "final-layer-shoes",
-    bottom: "final-layer-bottom",
-    top: "final-layer-top",
-    acc: "final-layer-item",
-  };
-
-  const CATEGORY_ORDER = { shoes: 10, bottom: 20, top: 30, acc: 50 };
-
-  // 착용 순서(카테고리 우선순위)대로 정렬
-  const sortedRoom = [...room].sort(
-    (a, b) => (CATEGORY_ORDER[a.category] || 30) - (CATEGORY_ORDER[b.category] || 30)
-  );
-
   return (
     <div className={`final-character-display final-character-display--${roomId}`}>
       <img src={characterImg} alt={`${roomId} final pose`} className="final-layer-img final-layer-body" />
 
-      {sortedRoom.map((item, index) => (
+      {room.shoes && (
+        <img src={resolveItemImage(roomId, room.shoes.image)} alt="shoes" className="final-layer-img final-layer-shoes" />
+      )}
+      {room.bottom && (
+        <img src={resolveItemImage(roomId, room.bottom.image)} alt="bottom" className="final-layer-img final-layer-bottom" />
+      )}
+      {room.top && (
+        <img src={resolveItemImage(roomId, room.top.image)} alt="top" className="final-layer-img final-layer-top" />
+      )}
+      {room.outer && (
+        <img src={resolveItemImage(roomId, room.outer.image)} alt="outer" className="final-layer-img final-layer-top-outer" />
+      )}
+      {room.acc.map((item) => (
         <img
           key={item.id}
           src={resolveItemImage(roomId, item.image)}
-          alt={item.category}
-          className={`final-layer-img ${CATEGORY_LAYER_CLASS[item.category] || "final-layer-item"}`}
-          style={{ zIndex: (CATEGORY_ORDER[item.category] || 30) + index }}
+          alt="acc"
+          className="final-layer-img final-layer-item"
         />
       ))}
     </div>

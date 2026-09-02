@@ -62,11 +62,13 @@ function Main() {
   // 중앙 3초 토스트 메시지 상태
   const [toastMessage, setToastMessage] = useState(null);
 
-  // 캐릭터별 착용 중인 아이템 리스트 (배열 구조로 무제한 레이어드 지원)
+  // 캐릭터별 착용 중인 아이템 리스트 (악세서리 카테고리만 배열 구조 : 무제한 레이어드 지원)
   const [wornItems, setWornItems] = useState({
-    mg: [],
-    jh: [],
+    mg: { top: null, outer: null, bottom: null, shoes: null, acc: [] },
+    jh: { top: null, outer: null, bottom: null, shoes: null, acc: [] },
   });
+
+  const CAPE_TOP_IDS = ["mg_top_206", "jh_top_202", "jh_top_204", "jh_top_205"];
 
   const handlePrevRoom = () => {
     if (toastMessage || isStealMode) return;
@@ -139,19 +141,47 @@ function Main() {
       return;
     }
 
-    // [2] 일반 착용 모드: 배열에 토글 (클릭 시 무조건 추가/제거)
+    // [2] 일반 착용 모드
     const roomId = currentRoom.id;
-    setWornItems((prev) => {
-      const currentWorn = prev[roomId];
-      const isAlreadyWorn = currentWorn.some((i) => i.id === item.id);
 
-      return {
+    // acc는 배열로 토글 (여러 개 허용)
+    if (item.category === "acc") {
+      setWornItems((prev) => {
+        const currentAcc = prev[roomId].acc;
+        const isWorn = currentAcc.some((i) => i.id === item.id);
+        return {
+          ...prev,
+          [roomId]: {
+            ...prev[roomId],
+            acc: isWorn
+              ? currentAcc.filter((i) => i.id !== item.id)
+              : [...currentAcc, item],
+          },
+        };
+      });
+      return;
+    }
+
+    // 케이프류는 outer 슬롯
+    if (CAPE_TOP_IDS.includes(item.id)) {
+      setWornItems((prev) => ({
         ...prev,
-        [roomId]: isAlreadyWorn
-          ? currentWorn.filter((i) => i.id !== item.id) // 이미 입었으면 벗기
-          : [...currentWorn, item], // 안 입었으면 위에 겹쳐 입기
-      };
-    });
+        [roomId]: {
+          ...prev[roomId],
+          outer: prev[roomId].outer?.id === item.id ? null : item,
+        },
+      }));
+      return;
+    }
+
+    // top/bottom/shoes는 슬롯 하나 (교체 또는 해제)
+    setWornItems((prev) => ({
+      ...prev,
+      [roomId]: {
+        ...prev[roomId],
+        [item.category]: prev[roomId][item.category]?.id === item.id ? null : item,
+      },
+    }));
   };
 
   const currentCategoryKey = CATEGORY_MAP[activeTab];
@@ -160,8 +190,8 @@ function Main() {
   const myStolenCategoryItems = isStealMode
     ? []
     : stolenItems[currentRoom.id].filter(
-        (item) => item.category === currentCategoryKey,
-      );
+      (item) => item.category === currentCategoryKey,
+    );
 
   // 기본 옷장 아이템 목록
   const baseCategoryItems = ITEMS.filter(
@@ -172,13 +202,6 @@ function Main() {
 
   // 최종 노출 목록
   const filteredItems = [...myStolenCategoryItems, ...baseCategoryItems];
-
-  // 착용 중인 아이템들을 카테고리/선택 순서대로 정렬하여 렌더링
-  const sortedWornItems = [...wornItems[currentRoom.id]].sort((a, b) => {
-    return (
-      (CATEGORY_ORDER[a.category] || 30) - (CATEGORY_ORDER[b.category] || 30)
-    );
-  });
 
   const handleGoDate = () => {
     navigate("/result", { state: { wornItems } });
@@ -250,17 +273,21 @@ function Main() {
                 className="layer-img layer-body"
               />
 
-              {/* 착용한 모든 옷 겹쳐서 출력 */}
-              {sortedWornItems.map((item, index) => (
-                <img
-                  key={item.id}
-                  src={item.image}
-                  alt={item.name}
-                  className="layer-img"
-                  style={{
-                    zIndex: (CATEGORY_ORDER[item.category] || 30) + index,
-                  }}
-                />
+              {/* 착용한 옷 출력 */}
+              {wornItems[currentRoom.id].shoes && (
+                <img src={wornItems[currentRoom.id].shoes.image} alt="Shoes" className="layer-img layer-shoes" />
+              )}
+              {wornItems[currentRoom.id].bottom && (
+                <img src={wornItems[currentRoom.id].bottom.image} alt="Bottom" className="layer-img layer-bottom" />
+              )}
+              {wornItems[currentRoom.id].top && (
+                <img src={wornItems[currentRoom.id].top.image} alt="Top" className="layer-img layer-top" />
+              )}
+              {wornItems[currentRoom.id].outer && (
+                <img src={wornItems[currentRoom.id].outer.image} alt="Outer" className="layer-img layer-top-outer" />
+              )}
+              {wornItems[currentRoom.id].acc.map((item) => (
+                <img key={item.id} src={item.image} alt="Acc" className="layer-img layer-item" />
               ))}
 
               {/* 손 레이어 (상의 위에 위치) */}
@@ -290,9 +317,12 @@ function Main() {
 
             <div className="item-scroll-list">
               {filteredItems.map((item) => {
-                const isSelected = wornItems[currentRoom.id].some(
-                  (i) => i.id === item.id,
-                );
+                                const isSelected =
+                  item.category === "acc"
+                    ? wornItems[currentRoom.id].acc.some((i) => i.id === item.id)
+                    : CAPE_TOP_IDS.includes(item.id)
+                    ? wornItems[currentRoom.id].outer?.id === item.id
+                    : wornItems[currentRoom.id][item.category]?.id === item.id;
                 const isStolenItem = !item.id.startsWith(currentRoom.id);
 
                 return (

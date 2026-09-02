@@ -5,18 +5,19 @@ function pickRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-// room은 이제 배열. bottom 카테고리 아이템이 하나라도 있으면 착용으로 침
+// room은 이제 { top, outer, bottom, shoes, acc: [] } 객체
 function isRoomEmpty(room) {
-  return !room.some((item) => item.category === "bottom");
+  return room.bottom === null; // 하의 미착용 = 미착용으로 침
 }
 
-export function getWornIds(wornItems) {
-  return [...wornItems.mg, ...wornItems.jh].map((item) => item.id);
-}
+// 슬롯(top/outer/bottom/shoes) + acc 배열을 합쳐서 id 목록으로
+function getWornIds(wornItems) {
+  const collectRoom = (room) => {
+    const slots = [room.top, room.outer, room.bottom, room.shoes].filter(Boolean);
+    return [...slots, ...room.acc].map((item) => item.id);
+  };
 
-// 카테고리별로 하나씩 꺼내기 (FinalCharacter에서 쓰기 위해)
-export function getItemByCategory(room, category) {
-  return room.find((item) => item.category === category) ?? null;
+  return [...collectRoom(wornItems.mg), ...collectRoom(wornItems.jh)];
 }
 
 export function getResult(wornItems) {
