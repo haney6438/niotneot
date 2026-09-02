@@ -65,12 +65,12 @@ export const ITEMS = [
     category: "top",
     image: "/item-img/mg_top_201.png",
   }, //조합템
-  {
-    id: "mg_top_202",
-    name: "민규 홍콩 상의",
-    category: "top",
-    image: "/item-img/mg_top_202.png",
-  }, //조합템
+  // {
+  //   id: "mg_top_202",
+  //   name: "민규 홍콩 상의",
+  //   category: "top",
+  //   image: "/item-img/mg_top_202.png",
+  // }, //조합템
   {
     id: "mg_top_203",
     name: "민규 압구정 상의1",
@@ -177,12 +177,12 @@ export const ITEMS = [
     category: "top",
     image: "/item-img/jh_top_203.png",
   }, //조합템
-  {
-    id: "jh_top_204",
-    name: "정한 홍콩 상의2",
-    category: "top",
-    image: "/item-img/jh_top_204.png",
-  }, //조합템
+  // {
+  //   id: "jh_top_204",
+  //   name: "정한 홍콩 상의2",
+  //   category: "top",
+  //   image: "/item-img/jh_top_204.png",
+  // }, //조합템
   {
     id: "jh_top_205",
     name: "정한 압구정 상의2",
@@ -241,12 +241,12 @@ export const ITEMS = [
     category: "bottom",
     image: "/item-img/mg_bottom_201.png",
   }, //조합템
-  {
-    id: "mg_bottom_202",
-    name: "민규 홍콩 하의",
-    category: "bottom",
-    image: "/item-img/mg_bottom_202.png",
-  }, //조합템
+  // {
+  //   id: "mg_bottom_202",
+  //   name: "민규 홍콩 하의",
+  //   category: "bottom",
+  //   image: "/item-img/mg_bottom_202.png",
+  // }, //조합템
   {
     id: "mg_bottom_203",
     name: "민규 압구정 하의",
@@ -304,12 +304,12 @@ export const ITEMS = [
     category: "bottom",
     image: "/item-img/jh_bottom_201.png",
   }, //조합템
-  {
-    id: "jh_bottom_202",
-    name: "정한 홍콩 하의",
-    category: "bottom",
-    image: "/item-img/jh_bottom_202.png",
-  }, //조합템
+  // {
+  //   id: "jh_bottom_202",
+  //   name: "정한 홍콩 하의",
+  //   category: "bottom",
+  //   image: "/item-img/jh_bottom_202.png",
+  // }, //조합템
   {
     id: "jh_bottom_203",
     name: "정한 압구정 하의",
@@ -366,13 +366,13 @@ export const ITEMS = [
     image: "/item-img/mg_acc_05.png",
     thumbnail: "/item-thumb-img/mg_acc_05.png",
   },
-  {
-    id: "mg_acc_06",
-    name: "민규 덮머",
-    category: "acc",
-    image: "/item-img/mg_acc_06.png",
-    thumbnail: "/item-thumb-img/mg_acc_06.png",
-  },
+  // {
+  //   id: "mg_acc_06",
+  //   name: "민규 덮머",
+  //   category: "acc",
+  //   image: "/item-img/mg_acc_06.png",
+  //   thumbnail: "/item-thumb-img/mg_acc_06.png",
+  // },
   {
     id: "mg_acc_07",
     name: "민규 깐머",
@@ -475,13 +475,13 @@ export const ITEMS = [
     image: "/item-img/jh_acc_07.png",
     thumbnail: "/item-thumb-img/jh_acc_07.png",
   },
-  {
-    id: "jh_acc_08",
-    name: "정한 장발",
-    category: "acc",
-    image: "/item-img/jh_acc_08.png",
-    thumbnail: "/item-thumb-img/jh_acc_08.png",
-  },
+  // {
+  //   id: "jh_acc_08",
+  //   name: "정한 장발",
+  //   category: "acc",
+  //   image: "/item-img/jh_acc_08.png",
+  //   thumbnail: "/item-thumb-img/jh_acc_08.png",
+  // },
 
   {
     id: "jh_acc_101",
@@ -533,7 +533,7 @@ export const ITEMS = [
     image: "/item-img/jh_acc_205.png",
     thumbnail: "/item-thumb-img/jh_acc_205.png",
   }, // 조합템
-  
+
   // ------ 신발 -------
   // - 민규
   {
@@ -565,13 +565,13 @@ export const ITEMS = [
     thumbnail: "/item-thumb-img/mg_shoes_04.png",
   }, // 커플템
 
-  {
-    id: "mg_shoes_201",
-    name: "민규 홍콩 신발",
-    category: "shoes",
-    image: "/item-img/mg_shoes_201.png",
-    thumbnail: "/item-thumb-img/mg_shoes_201.png",
-  }, // 조합템
+  // {
+  //   id: "mg_shoes_201",
+  //   name: "민규 홍콩 신발",
+  //   category: "shoes",
+  //   image: "/item-img/mg_shoes_201.png",
+  //   thumbnail: "/item-thumb-img/mg_shoes_201.png",
+  // }, // 조합템
   {
     id: "mg_shoes_202",
     name: "민규 15할로윈 신발",
@@ -603,13 +603,13 @@ export const ITEMS = [
     thumbnail: "/item-thumb-img/jh_shoes_03.png",
   }, // 커플템
 
-  {
-    id: "jh_shoes_201",
-    name: "정한 홍콩 신발",
-    category: "shoes",
-    image: "/item-img/jh_shoes_201.png",
-    thumbnail: "/item-thumb-img/jh_shoes_201.png",
-  }, // 조합템
+  // {
+  //   id: "jh_shoes_201",
+  //   name: "정한 홍콩 신발",
+  //   category: "shoes",
+  //   image: "/item-img/jh_shoes_201.png",
+  //   thumbnail: "/item-thumb-img/jh_shoes_201.png",
+  // }, // 조합템
   {
     id: "jh_shoes_202",
     name: "정한 나나투어 신발",
