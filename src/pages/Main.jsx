@@ -317,12 +317,12 @@ function Main() {
 
             <div className="item-scroll-list">
               {filteredItems.map((item) => {
-                                const isSelected =
+                const isSelected =
                   item.category === "acc"
                     ? wornItems[currentRoom.id].acc.some((i) => i.id === item.id)
                     : CAPE_TOP_IDS.includes(item.id)
-                    ? wornItems[currentRoom.id].outer?.id === item.id
-                    : wornItems[currentRoom.id][item.category]?.id === item.id;
+                      ? wornItems[currentRoom.id].outer?.id === item.id
+                      : wornItems[currentRoom.id][item.category]?.id === item.id;
                 const isStolenItem = !item.id.startsWith(currentRoom.id);
 
                 return (
@@ -332,7 +332,7 @@ function Main() {
                     onClick={() => handleItemClick(item)}>
                     <div className="item-thumb">
                       <img
-                        src={item.image}
+                        src={item.thumbnail || item.image}
                         alt={item.name}
                         onError={(e) => {
                           e.target.style.opacity = "0.2";
