@@ -237,7 +237,7 @@ export const ITEMS = [
 
   {
     id: "mg_bottom_201",
-    name: "민규 제주도 하의",
+    name: "민규 (제주도/나나투어) 하의",
     category: "bottom",
     image: "/item-img/mg_bottom_201.png",
   }, //조합템
@@ -253,12 +253,12 @@ export const ITEMS = [
     category: "bottom",
     image: "/item-img/mg_bottom_203.png",
   }, //조합템
-  {
-    id: "mg_bottom_204",
-    name: "민규 나나투어 하의",
-    category: "bottom",
-    image: "/item-img/mg_bottom_204.png",
-  }, //조합템
+  // {
+  //   id: "mg_bottom_204",
+  //   name: "민규 나나투어 하의",
+  //   category: "bottom",
+  //   image: "/item-img/mg_bottom_204.png",
+  // }, //조합템
   {
     id: "mg_bottom_205",
     name: "민규 15할로윈 하의",

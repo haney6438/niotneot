@@ -132,7 +132,7 @@ export const SET = [
     id: "set_4",
     requiredItems: [ //민규 신발,악세 x
       "jh_top_206",
-      "mg_bottom_204", "jh_bottom_204",
+      "mg_bottom_201", "jh_bottom_204",
       "jh_acc_05",
       "jh_acc_204",
       "jh_shoes_202",
