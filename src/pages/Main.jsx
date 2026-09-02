@@ -25,50 +25,61 @@ const CATEGORY_MAP = {
   악세사리: "acc",
 };
 
-
-// 화면에 겹쳐서 깔릴 레이어 우선순위 (아래 -> 위)
-const CATEGORY_ORDER = {
-  shoes: 10,
-  bottom: 20,
-  top: 30,
-  acc: 50,
+// 양말 아이템 판별 함수 (ID나 이름에 sock/양말이 들어가면 양말 처리)
+const checkIsSocks = (item) => {
+  if (!item) return false;
+  return (
+    item.category === "socks" ||
+    item.id.toLowerCase().includes("sock") ||
+    (item.name && item.name.includes("양말"))
+  );
 };
+
+const CAPE_TOP_IDS = ["mg_top_206", "jh_top_202", "jh_top_204", "jh_top_205"];
 
 function Main() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Start.jsx에서 넘어온 값({ state: { room: "mg" | "jh" } }) 읽기
   const requestedRoomId = location.state?.room;
   const initialIdx = ROOMS_DATA.findIndex((r) => r.id === requestedRoomId);
 
   const [currentRoomIdx, setCurrentRoomIdx] = useState(
-    initialIdx !== -1 ? initialIdx : 0
+    initialIdx !== -1 ? initialIdx : 0,
   );
   const currentRoom = ROOMS_DATA[currentRoomIdx];
 
   const [activeTab, setActiveTab] = useState("상의");
 
-  // 훔쳐오기 모드 상태
   const [originalRoomId, setOriginalRoomId] = useState(null);
   const [isStealMode, setIsStealMode] = useState(false);
 
-  // 훔쳐온 아이템 보관함 (캐릭터별 배열)
   const [stolenItems, setStolenItems] = useState({
     mg: [],
     jh: [],
   });
 
-  // 중앙 3초 토스트 메시지 상태
   const [toastMessage, setToastMessage] = useState(null);
 
-  // 캐릭터별 착용 중인 아이템 리스트 (악세서리 카테고리만 배열 구조 : 무제한 레이어드 지원)
+  // socks 슬롯 포함된 착용 상태
   const [wornItems, setWornItems] = useState({
-    mg: { top: null, outer: null, bottom: null, shoes: null, acc: [] },
-    jh: { top: null, outer: null, bottom: null, shoes: null, acc: [] },
+    mg: {
+      top: null,
+      outer: null,
+      bottom: null,
+      socks: null,
+      shoes: null,
+      acc: [],
+    },
+    jh: {
+      top: null,
+      outer: null,
+      bottom: null,
+      socks: null,
+      shoes: null,
+      acc: [],
+    },
   });
-
-  const CAPE_TOP_IDS = ["mg_top_206", "jh_top_202", "jh_top_204", "jh_top_205"];
 
   const handlePrevRoom = () => {
     if (toastMessage || isStealMode) return;
@@ -84,7 +95,6 @@ function Main() {
     setCurrentRoomIdx((prev) => (prev < ROOMS_DATA.length - 1 ? prev + 1 : 0));
   };
 
-  // 훔쳐오기 / 돌아가기 버튼 토글
   const handleStealToggle = () => {
     if (toastMessage) return;
 
@@ -103,7 +113,7 @@ function Main() {
   const handleItemClick = (item) => {
     if (toastMessage) return;
 
-    // [1] 훔쳐오기 모드: 내 보관함에 추가 후 복귀
+    // [1] 훔쳐오기 모드
     if (isStealMode && originalRoomId) {
       const itemNum = parseInt(item.id.split("_").pop(), 10);
       const isStealable = itemNum >= 100;
@@ -143,8 +153,33 @@ function Main() {
 
     // [2] 일반 착용 모드
     const roomId = currentRoom.id;
+    const isSocks = checkIsSocks(item);
 
-    // acc는 배열로 토글 (여러 개 허용)
+    // 1. 양말인 경우: 악세사리 탭에서 골라도 무조건 socks 슬롯에 착용
+    if (isSocks) {
+      setWornItems((prev) => ({
+        ...prev,
+        [roomId]: {
+          ...prev[roomId],
+          socks: prev[roomId].socks?.id === item.id ? null : item,
+        },
+      }));
+      return;
+    }
+
+    // 2. 케이프류인 경우
+    if (CAPE_TOP_IDS.includes(item.id)) {
+      setWornItems((prev) => ({
+        ...prev,
+        [roomId]: {
+          ...prev[roomId],
+          outer: prev[roomId].outer?.id === item.id ? null : item,
+        },
+      }));
+      return;
+    }
+
+    // 3. 일반 악세사리인 경우 (양말 제외): 배열 토글
     if (item.category === "acc") {
       setWornItems((prev) => {
         const currentAcc = prev[roomId].acc;
@@ -162,45 +197,39 @@ function Main() {
       return;
     }
 
-    // 케이프류는 outer 슬롯
-    if (CAPE_TOP_IDS.includes(item.id)) {
-      setWornItems((prev) => ({
-        ...prev,
-        [roomId]: {
-          ...prev[roomId],
-          outer: prev[roomId].outer?.id === item.id ? null : item,
-        },
-      }));
-      return;
-    }
-
-    // top/bottom/shoes는 슬롯 하나 (교체 또는 해제)
+    // 4. 상의/하의/신발
     setWornItems((prev) => ({
       ...prev,
       [roomId]: {
         ...prev[roomId],
-        [item.category]: prev[roomId][item.category]?.id === item.id ? null : item,
+        [item.category]:
+          prev[roomId][item.category]?.id === item.id ? null : item,
       },
     }));
   };
 
   const currentCategoryKey = CATEGORY_MAP[activeTab];
 
-  // 훔쳐온 아이템 중 현재 탭에 맞는 항목
+  // 옷장 노출 조건 (양말은 '악세사리' 탭에 포함되도록 설정)
+  const isItemInCurrentTab = (item) => {
+    const isSocks = checkIsSocks(item);
+    if (activeTab === "악세사리") {
+      return item.category === "acc" || isSocks;
+    }
+    if (activeTab === "신발") {
+      return item.category === "shoes" && !isSocks; // 신발 탭엔 순수 신발만
+    }
+    return item.category === currentCategoryKey;
+  };
+
   const myStolenCategoryItems = isStealMode
     ? []
-    : stolenItems[currentRoom.id].filter(
-      (item) => item.category === currentCategoryKey,
-    );
+    : stolenItems[currentRoom.id].filter(isItemInCurrentTab);
 
-  // 기본 옷장 아이템 목록
   const baseCategoryItems = ITEMS.filter(
-    (item) =>
-      item.id.startsWith(currentRoom.id) &&
-      item.category === currentCategoryKey,
+    (item) => item.id.startsWith(currentRoom.id) && isItemInCurrentTab(item),
   );
 
-  // 최종 노출 목록
   const filteredItems = [...myStolenCategoryItems, ...baseCategoryItems];
 
   const handleGoDate = () => {
@@ -266,39 +295,85 @@ function Main() {
         <main className="dressing-room-content">
           <section className="left-character-zone">
             <div className="character-display">
-              {/* 기본 몸체 */}
+              {/* 바디 (10) */}
               <img
                 src={currentRoom.characterImg}
                 alt="Body"
-                className="layer-img layer-body"
+                className="layer-img"
+                style={{ zIndex: 10 }}
               />
 
-              {/* 착용한 옷 출력 */}
-              {wornItems[currentRoom.id].shoes && (
-                <img src={wornItems[currentRoom.id].shoes.image} alt="Shoes" className="layer-img layer-shoes" />
+              {/* 1. 양말 (15: 악세사리 탭에서 골라도 신발 밑에 깔림) */}
+              {wornItems[currentRoom.id].socks && (
+                <img
+                  src={wornItems[currentRoom.id].socks.image}
+                  alt="Socks"
+                  className="layer-img"
+                  style={{ zIndex: 15 }}
+                />
               )}
-              {wornItems[currentRoom.id].bottom && (
-                <img src={wornItems[currentRoom.id].bottom.image} alt="Bottom" className="layer-img layer-bottom" />
-              )}
-              {wornItems[currentRoom.id].top && (
-                <img src={wornItems[currentRoom.id].top.image} alt="Top" className="layer-img layer-top" />
-              )}
-              {wornItems[currentRoom.id].outer && (
-                <img src={wornItems[currentRoom.id].outer.image} alt="Outer" className="layer-img layer-top-outer" />
-              )}
-              {wornItems[currentRoom.id].acc.map((item) => (
-                <img key={item.id} src={item.image} alt="Acc" className="layer-img layer-item" />
-              ))}
 
-              {/* 손 레이어 (상의 위에 위치) */}
+              {/* 2. 신발 (25: 양말을 무조건 덮음) */}
+              {wornItems[currentRoom.id].shoes && (
+                <img
+                  src={wornItems[currentRoom.id].shoes.image}
+                  alt="Shoes"
+                  className="layer-img"
+                  style={{ zIndex: 25 }}
+                />
+              )}
+
+              {/* 3. 하의 (30) */}
+              {wornItems[currentRoom.id].bottom && (
+                <img
+                  src={wornItems[currentRoom.id].bottom.image}
+                  alt="Bottom"
+                  className="layer-img"
+                  style={{ zIndex: 30 }}
+                />
+              )}
+
+              {/* 4. 상의 (35) */}
+              {wornItems[currentRoom.id].top && (
+                <img
+                  src={wornItems[currentRoom.id].top.image}
+                  alt="Top"
+                  className="layer-img"
+                  style={{ zIndex: 35 }}
+                />
+              )}
+
+              {/* 5. 손 (40) */}
               {currentRoom.handImg && (
                 <img
                   src={currentRoom.handImg}
                   alt="Hand"
-                  className="layer-img layer-hand"
+                  className="layer-img"
+                  style={{ zIndex: 40 }}
                   onError={(e) => (e.target.style.display = "none")}
                 />
               )}
+
+              {/* 6. 외투/망토 (45) */}
+              {wornItems[currentRoom.id].outer && (
+                <img
+                  src={wornItems[currentRoom.id].outer.image}
+                  alt="Outer"
+                  className="layer-img"
+                  style={{ zIndex: 45 }}
+                />
+              )}
+
+              {/* 7. 일반 악세사리 (50 이상) */}
+              {wornItems[currentRoom.id].acc.map((item, idx) => (
+                <img
+                  key={item.id}
+                  src={item.image}
+                  alt="Acc"
+                  className="layer-img"
+                  style={{ zIndex: 50 + idx }}
+                />
+              ))}
             </div>
           </section>
 
@@ -317,12 +392,18 @@ function Main() {
 
             <div className="item-scroll-list">
               {filteredItems.map((item) => {
-                const isSelected =
-                  item.category === "acc"
-                    ? wornItems[currentRoom.id].acc.some((i) => i.id === item.id)
+                const isSocks = checkIsSocks(item);
+                const isSelected = isSocks
+                  ? wornItems[currentRoom.id].socks?.id === item.id
+                  : item.category === "acc"
+                    ? wornItems[currentRoom.id].acc.some(
+                        (i) => i.id === item.id,
+                      )
                     : CAPE_TOP_IDS.includes(item.id)
                       ? wornItems[currentRoom.id].outer?.id === item.id
-                      : wornItems[currentRoom.id][item.category]?.id === item.id;
+                      : wornItems[currentRoom.id][item.category]?.id ===
+                        item.id;
+
                 const isStolenItem = !item.id.startsWith(currentRoom.id);
 
                 return (
@@ -352,7 +433,6 @@ function Main() {
           </button>
         </footer>
 
-        {/* 중앙 3초 토스트 박스 */}
         {toastMessage && (
           <div className="steal-toast-popup">
             <div className="steal-toast-text">{toastMessage}</div>
