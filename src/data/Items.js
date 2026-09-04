@@ -51,6 +51,12 @@ export const ITEMS = [
     category: "top",
     image: "/item-img/mg_top_08.png",
   }, //커플템
+  {
+    id: "mg_top_09",
+    name: "민규 이름 티",
+    category: "top",
+    image: "/item-img/mg_top_09.png",
+  },
 
   {
     id: "mg_top_101",
@@ -94,12 +100,6 @@ export const ITEMS = [
     name: "민규 15할로윈 상의2",
     category: "top",
     image: "/item-img/mg_top_206.png",
-  }, //조합템
-  {
-    id: "mg_top_207",
-    name: "나나투어 반팔티셔츠",
-    category: "top",
-    image: "/item-img/mg_top_207.png",
   }, //조합템
 
   // - 정한

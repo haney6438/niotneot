@@ -5,7 +5,7 @@ export const MG_EMPTY_BUBBLES = [
   { text: "민규야 너무 과해", speaker: "jh" },
 ];
 
-// 정한 미착용 (텍스트 채워주세요 - 자리만 잡아둠)
+// 정한 미착용 
 export const JH_EMPTY_BUBBLES = [
   { text: "벗겨놓잖아? 꼴뚜기같아 느낌이", speaker: "mg" },
 ];
@@ -61,7 +61,7 @@ export const SET = [
       ],
     },
   },
-  // set_2: 홍콩 데이트
+  // set_2: 홍콩 데이트 - 제외
   {
     id: "set_2",
     requiredItems: [
