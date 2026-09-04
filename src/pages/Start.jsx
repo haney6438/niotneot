@@ -77,7 +77,7 @@ function Start() {
               data-path="/main"
               data-room="mg"
             >
-              🐶❤️‍🔥
+              🐶
             </p>
             <p
               className={`dropzone ${hoverRoom === "jh" ? "hover" : ""}`}
