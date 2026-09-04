@@ -163,6 +163,7 @@
 }
 
 .final-layer-body { z-index: 10; }
+.final-layer-socks {  z-index: 20;}
 .final-layer-shoes { z-index: 25; }
 .final-layer-bottom { z-index: 30; }
 .final-layer-top { z-index: 35; }

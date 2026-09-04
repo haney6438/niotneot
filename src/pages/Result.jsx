@@ -15,7 +15,7 @@ const CHARACTER_BASE = {
   jh: "/character-img/yjh.png",
 };
 
-const EMPTY_ROOM = { top: null, outer: null, bottom: null, shoes: null, acc: [] };
+const EMPTY_ROOM = { top: null, outer: null, bottom: null, socks: null, shoes: null, acc: [] };
 
 function SparkleBackground() {
   const sparkles = Array.from({ length: 15 }, (_, i) => ({
@@ -47,6 +47,9 @@ function FinalCharacter({ roomId, room }) {
     <div className={`final-character-display final-character-display--${roomId}`}>
       <img src={characterImg} alt={`${roomId} final pose`} className="final-layer-img final-layer-body" />
 
+      {room.socks && (
+        <img src={resolveItemImage(roomId, room.socks.image)} alt="socks" className="final-layer-img final-layer-socks" />
+      )}
       {room.shoes && (
         <img src={resolveItemImage(roomId, room.shoes.image)} alt="shoes" className="final-layer-img final-layer-shoes" />
       )}
